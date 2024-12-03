@@ -110,8 +110,8 @@ class ROBERTA_Guesser(Guesser):
     What is needed:
         We need to fine-tune ROBERTA to classify onto our LLM stack. In order to do this, we need data examples of where to start. What I am thinking is basically a 2-column CSV of <query>,<level> (though in practice, this is likely easier to store in json).
 
-        Query should be the NLP query posed. Level should be the first level at which the LLM chain produced an **executable** or **coerect** query (whether it was correct or not).
-            - note -- do we want to say its the first level we got a correct query at? Using the Spider2SPARQL benchmark (https://arxiv.org/html/2309.16248v2) we know the right answers -- and we can just promt up the chain until we get a correct one. I like that better, lets go with that.
+        Query should be the NLP query posed. Level should be the first level at which the LLM chain produced an **executable** or **correct** query (whether it was correct or not).
+            - note -- do we want to say its the first level we got a correct query at? Using the Spider2SPARQL benchmark (https://arxiv.org/html/2309.16248v2) we know the right answers -- and we can just prompt up the chain until we get a correct one. I like that better, lets go with that.
             - but get data on both, so can choose to guess correct or guess executable.
             - we should use the BLEU measure to say yes if the predicted query is X% correct compared tyo the ground truth query. For the exact percent, we should look at the dist, then choose the cuttoff from there. Matt has an implementation of BLEU in oldProject/.
             - for useful examples, see: "validate_sparql_syntax(query)" and "check_query_execution(query, endpoint="https://dbpedia.org/sparql")" in oldProject/analysis.ipynb
