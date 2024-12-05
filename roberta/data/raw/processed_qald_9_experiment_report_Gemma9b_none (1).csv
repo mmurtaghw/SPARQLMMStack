@@ -1,0 +1,3150 @@
+question_id,question,model,quantization,generated_query,reference_query,time_taken,parsed_generated_query,is_syntax_valid,is_execution_valid,bleu_score,macro_f1
+99,What is the time zone of Salt Lake City?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the time zone of Salt Lake City?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?timeZone
+WHERE {
+  dbp:population ?city .
+  ?city dbo:name ""Salt Lake City"" .
+  ?city dbo:timeZone ?timeZone .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?uri WHERE { res:Salt_Lake_City <http://dbpedia.org/ontology/timeZone> ?uri },205.5752019882202,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?timeZone
+WHERE {
+  dbp:population ?city .
+  ?city dbo:name ""Salt Lake City"" .
+  ?city dbo:timeZone ?timeZone .
+}",False,False,0.12586347848916266,0.22580645161290322
+98,Who killed Caesar?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who killed Caesar?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?assassin
+WHERE {
+  ?assassin dbo:killed ?victim .
+  ?victim dbo:name ""Julius Caesar"" .
+}
+```
+",PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> SELECT DISTINCT ?uri WHERE { ?uri dct:subject dbc:Assassins_of_Julius_Caesar },156.98920154571533,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?assassin
+WHERE {
+  ?assassin dbo:killed ?victim .
+  ?victim dbo:name ""Julius Caesar"" .
+}",True,True,5.287667392736108e-155,0.1724137931034483
+86,What is the highest mountain in Germany?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the highest mountain in Germany?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?mountainName
+WHERE {
+  ?mountain dbo:country ""Germany""^^xsd:string .
+  ?mountain dbo:elevation ?elevation .
+  ?mountain dbo:name ?mountainName .
+  FILTER (BOUND(?elevation) )
+  FILTER ( ?elevation = (SELECT MAX(?elevation2) WHERE { ?mountain2 dbo:country ""Germany""^^xsd:string . ?mountain2 dbo:elevation ?elevation2 . }) )
+}
+```
+",PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX onto: <http://dbpedia.org/ontology/> SELECT ?uri WHERE { ?uri rdf:type onto:Mountain ; onto:elevation ?elevation ; onto:locatedInArea <http://dbpedia.org/resource/Germany> } ORDER BY DESC(?elevation) LIMIT 1,300.275758266449,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?mountainName
+WHERE {
+  ?mountain dbo:country ""Germany""^^xsd:string .
+  ?mountain dbo:elevation ?elevation .
+  ?mountain dbo:name ?mountainName .
+  FILTER (BOUND(?elevation) )
+  FILTER ( ?elevation = (SELECT MAX(?elevation2) WHERE { ?mountain2 dbo:country ""Germany""^^xsd:string . ?mountain2 dbo:elevation ?elevation2 . }) )
+}",False,True,3.803771581523221e-155,0.13725490196078433
+84,Which American presidents were in office during the Vietnam War?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which American presidents were in office during the Vietnam War?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?president ?termStart ?termEnd
+WHERE {
+  ?president dbo:birthDate ?birthDate .
+  ?president dbo:deathDate ?deathDate .
+  FILTER(?birthDate <= ""1954-04-17""^^xsd:date && ?deathDate >= ""1975-08-15""^^xsd:date)
+  ?president dbo:termStart ?termStart .
+  ?president dbo:termEnd ?termEnd .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> SELECT ?uri WHERE { ?uri dct:subject dbc:Presidents_of_the_United_States . res:Vietnam_War dbo:commander ?uri },380.97915387153625,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?president ?termStart ?termEnd
+WHERE {
+  ?president dbo:birthDate ?birthDate .
+  ?president dbo:deathDate ?deathDate .
+  FILTER(?birthDate <= ""1954-04-17""^^xsd:date && ?deathDate >= ""1975-08-15""^^xsd:date)
+  ?president dbo:termStart ?termStart .
+  ?president dbo:termEnd ?termEnd .
+}",True,True,0.07771324020744104,0.1702127659574468
+81,Butch Otter is the governor of which U.S. state?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Butch Otter is the governor of which U.S. state?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state
+WHERE {
+  ?person dbo:name ""Butch Otter"" .
+  ?person dbo:governorOf ?state .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/class/yago/WikicatStatesOfTheUnitedStates> ; <http://dbpedia.org/property/governor> <http://dbpedia.org/resource/Butch_Otter> },154.8471565246582,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state
+WHERE {
+  ?person dbo:name ""Butch Otter"" .
+  ?person dbo:governorOf ?state .
+}",True,True,4.777946850498661e-155,0.14814814814814814
+73,How many gold medals did Michael Phelps win at the 2008 Olympics?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many gold medals did Michael Phelps win at the 2008 Olympics?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(?medal) AS ?count)
+WHERE {
+  ?person dbo:name ""Michael Phelps"" .
+  ?person dbo:olympicGames ?games .
+  ?games dbo:year ""2008"" .
+  ?games dbo:goldMedalCount ?count .
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT Count(?sub) as ?c WHERE { ?sub dbo:goldMedalist dbr:Michael_Phelps . filter (contains (str(?sub), ""2008"") && contains (str(?sub), ""Olympics"")) }",298.06217908859253,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(?medal) AS ?count)
+WHERE {
+  ?person dbo:name ""Michael Phelps"" .
+  ?person dbo:olympicGames ?games .
+  ?games dbo:year ""2008"" .
+  ?games dbo:goldMedalCount ?count .
+}",True,True,0.1217802106941195,0.1923076923076923
+66,Which artists were born on the same date as Rachel Stevens?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which artists were born on the same date as Rachel Stevens?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?artist
+WHERE {
+  ?artist dbo:birthDate ?birthDate .
+  FILTER ( ?birthDate = <http://dbpedia.org/resource/Rachel_Stevens> )
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { ?uri a dbo:Artist . dbr:Rachel_Stevens dbo:birthDate ?birthdate . ?uri dbo:birthDate ?birthdate },249.34766268730164,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?artist
+WHERE {
+  ?artist dbo:birthDate ?birthDate .
+  FILTER ( ?birthDate = <http://dbpedia.org/resource/Rachel_Stevens> )
+}",True,True,0.13796620851017116,0.2631578947368421
+64,What is the profession of Frank Herbert?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the profession of Frank Herbert?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?profession
+WHERE {
+  <http://dbpedia.org/resource/Frank_Herbert> dbo:profession ?profession .
+}
+```
+",PREFIX dbpedia2: <http://dbpedia.org/property/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?string WHERE { res:Frank_Herbert dbpedia2:occupation ?string },152.77989530563354,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?profession
+WHERE {
+  <http://dbpedia.org/resource/Frank_Herbert> dbo:profession ?profession .
+}",True,True,6.373704167435469e-155,0.23076923076923078
+6,Are Taiko some kind of Japanese musical instrument?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Are Taiko some kind of Japanese musical instrument?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?x WHERE {
+  ?x dbo:abstract ""Taiko"" .
+  ?x dbo:type dbo:MusicalInstrument .
+  FILTER (lang(?x) = 'en')
+}
+```
+",ASK WHERE { <http://dbpedia.org/resource/Taiko> a <http://dbpedia.org/class/yago/WikicatJapaneseMusicalInstruments> },180.7748086452484,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?x WHERE {
+  ?x dbo:abstract ""Taiko"" .
+  ?x dbo:type dbo:MusicalInstrument .
+  FILTER (lang(?x) = 'en')
+}",True,True,4.13918559701879e-155,0.11538461538461539
+56,How many seats does the home stadium of FC Porto have?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many seats does the home stadium of FC Porto have?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(?capacity)) AS ?seatCount
+WHERE {
+  ?team dbo:officialName ""FC Porto"" .
+  ?team dbo:stadium ?stadium .
+  ?stadium dbp:capacity ?capacity .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbp: <http://dbpedia.org/property/> PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX db: <http://dbpedia.org/> SELECT ?capacity WHERE { { dbr:FC_Porto dbo:ground ?ground . ?ground dbo:capacity ?capacity } UNION { dbr:FC_Porto dbo:ground ?ground . ?ground dbp:capacity ?capacity } },263.78218626976013,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(?capacity)) AS ?seatCount
+WHERE {
+  ?team dbo:officialName ""FC Porto"" .
+  ?team dbo:stadium ?stadium .
+  ?stadium dbp:capacity ?capacity .
+}",False,True,0.18578387722381642,0.2916666666666667
+49,Which frequent flyer program has the most airlines?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which frequent flyer program has the most airlines?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?program ?airlineCount
+WHERE {
+  ?program dbo:type dbo:FrequentFlyerProgram .
+  ?program dbp:hasAirline ?airline .
+  GROUP BY ?program
+  ORDER BY DESC(?airlineCount)
+  LIMIT 1
+}
+```
+",SELECT ?uri WHERE { ?airline <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Airline> . ?airline <http://dbpedia.org/property/frequentFlyer> ?uri. } GROUP BY ?uri ORDER BY DESC(COUNT(DISTINCT ?airline)) OFFSET 0 LIMIT 1,211.2155773639679,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?program ?airlineCount
+WHERE {
+  ?program dbo:type dbo:FrequentFlyerProgram .
+  ?program dbp:hasAirline ?airline .
+  GROUP BY ?program
+  ORDER BY DESC(?airlineCount)
+  LIMIT 1
+}",False,False,7.355183594699182e-155,0.2558139534883721
+44,Which European countries have a constitutional monarchy?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which European countries have a constitutional monarchy?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbo:officialName ?officialName .
+  FILTER (LANG(?countryName) = 'en')
+  FILTER (regex(?officialName, ""constitutional monarchy"", ""i""))
+  FILTER (geo:inContinent(?country, geo:Europe) )
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX dbr: <http://dbpedia.org/resource/> SELECT ?uri WHERE { ?uri dct:subject dbc:Countries_in_Europe ; dbo:governmentType dbr:Constitutional_monarchy },318.73745703697205,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbo:officialName ?officialName .
+  FILTER (LANG(?countryName) = 'en')
+  FILTER (regex(?officialName, ""constitutional monarchy"", ""i""))
+  FILTER (geo:inContinent(?country, geo:Europe) )
+}",True,True,0.08447773742536654,0.14583333333333334
+42,Which countries have places with more than two caves?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which countries have places with more than two caves?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbp:location ?location .
+  ?location dbo:cave ?cave .
+  FILTER (COUNT(?cave) > 2)
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri WHERE { ?cave rdf:type dbo:Cave ; dbo:location ?uri . ?uri rdf:type dbo:Country } GROUP BY ?uri HAVING ( COUNT(?cave) > 2 ),203.31105947494507,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbp:location ?location .
+  ?location dbo:cave ?cave .
+  FILTER (COUNT(?cave) > 2)
+}",True,False,0.11230652044218295,0.22916666666666666
+4,"Which airports are located in California, USA?",google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which airports are located in California, USA?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT DISTINCT ?airport
+WHERE {
+  ?airport dbo:location dbp:California .
+  ?airport dbo:location dbo:country ?country .
+  ?country dbo:name ""United States""@en .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Airport> { ?uri <http://dbpedia.org/ontology/location> <http://dbpedia.org/resource/California> } UNION { ?uri <http://dbpedia.org/ontology/city> <http://dbpedia.org/resource/California> } UNION { ?uri <http://dbpedia.org/ontology/city> ?city . ?city <http://dbpedia.org/ontology/isPartOf> <http://dbpedia.org/resource/California> } UNION { ?uri <http://dbpedia.org/ontology/operator> <http://dbpedia.org/resource/California> } },258.25073862075806,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+SELECT DISTINCT ?airport
+WHERE {
+  ?airport dbo:location dbp:California .
+  ?airport dbo:location dbo:country ?country .
+  ?country dbo:name ""United States""@en .
+}",False,False,4.085533890033749e-155,0.16216216216216214
+37,What are the nicknames of San Francisco?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What are the nicknames of San Francisco?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?nickname
+WHERE {
+  ?city dbo:wikiPageID ""San_Francisco"" .
+  ?city dbp:nickname ?nickname .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT DISTINCT ?string WHERE { res:San_Francisco foaf:nick ?string },161.99980568885803,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?nickname
+WHERE {
+  ?city dbo:wikiPageID ""San_Francisco"" .
+  ?city dbp:nickname ?nickname .
+}",True,True,3.289634954129118e-78,0.26666666666666666
+32,What is Angela Merkel’s birth name?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is Angela Merkel’s birth name?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?birthName
+WHERE {
+  <http://dbpedia.org/resource/Angela_Merkel> dbo:birthName ?birthName .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?string WHERE { res:Angela_Merkel dbp:birthName ?string },161.75583696365356,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?birthName
+WHERE {
+  <http://dbpedia.org/resource/Angela_Merkel> dbo:birthName ?birthName .
+}",True,True,0.2102369368326755,0.2692307692307692
+31,Who is the mayor of Berlin?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the mayor of Berlin?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?mayor
+WHERE {
+  ?city dbo:officialMayor ?mayor .
+  FILTER (regex(?city, ""Berlin"", ""i""))
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { res:Berlin dbp:leader ?uri },158.06139183044434,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?mayor
+WHERE {
+  ?city dbo:officialMayor ?mayor .
+  FILTER (regex(?city, ""Berlin"", ""i""))
+}",True,True,0.16195570128532405,0.23333333333333334
+29,Which countries in the European Union adopted the Euro?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which countries in the European Union adopted the Euro?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbo:currency ""Euro""^^xsd:string .
+  ?country dbo:memberOf ?eu .
+  ?eu dbo:name ""European Union""^^xsd:string .
+}
+```
+","SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Country> { ?uri <http://dbpedia.org/ontology/currency> <http://dbpedia.org/resource/Euro> } UNION { ?uri <http://dbpedia.org/property/currencyCode> ""EUR""@en } }",280.69319248199463,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbo:currency ""Euro""^^xsd:string .
+  ?country dbo:memberOf ?eu .
+  ?eu dbo:name ""European Union""^^xsd:string .
+}",True,True,4.726550448515237e-155,0.13888888888888887
+23,Which software has been published by Mean Hamster Software?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which software has been published by Mean Hamster Software?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?software
+WHERE {
+  ?software dbo:publisher MeanHamsterSoftware .
+}
+```
+","PREFIX res: <http://dbpedia.org/resource/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX onto: <http://dbpedia.org/ontology/> PREFIX prop: <http://dbpedia.org/property/> SELECT DISTINCT ?uri WHERE { ?uri rdf:type onto:Software { ?uri prop:publisher ""Mean Hamster Software""@en } UNION { ?uri onto:publisher res:Mean_Hamster_Software } }",129.1052484512329,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?software
+WHERE {
+  ?software dbo:publisher MeanHamsterSoftware .
+}",False,False,1.0575853012906973e-78,0.2
+68,Which country was Bill Gates born in?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which country was Bill Gates born in?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?country
+WHERE {
+  ?person dbo:birthPlace ?country .
+  FILTER (regex(?person, ""Bill Gates"", ""i""))
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?country WHERE { { dbr:Bill_Gates dbo:birthPlace ?birthPlace . ?birthPlace dbo:country ?country } UNION { dbr:Bill_Gates dbo:birthPlace ?birthPlace . ?birthPlace dbo:isPartOf ?place . ?place dbo:country ?country } },160.47158360481262,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?country
+WHERE {
+  ?person dbo:birthPlace ?country .
+  FILTER (regex(?person, ""Bill Gates"", ""i""))
+}",True,True,0.06941169735102863,0.24390243902439024
+22,How many grand-children did Jacques Cousteau have?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many grand-children did Jacques Cousteau have?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?count
+WHERE {
+  ?person dbo:name ""Jacques Cousteau"" .
+  ?person dbo:spouse ?spouse .
+  ?spouse dbo:children ?children .
+  ?children dbo:children ?grandchildren .
+  BIND(COUNT(?grandchildren) AS ?count)
+}
+```
+",SELECT COUNT(DISTINCT ?y AS ?y) WHERE { <http://dbpedia.org/resource/Jacques_Cousteau> <http://dbpedia.org/ontology/child> ?x . ?x <http://dbpedia.org/ontology/child> ?y . },225.85001683235168,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?count
+WHERE {
+  ?person dbo:name ""Jacques Cousteau"" .
+  ?person dbo:spouse ?spouse .
+  ?spouse dbo:children ?children .
+  ?children dbo:children ?grandchildren .
+  BIND(COUNT(?grandchildren) AS ?count)
+}",True,False,4.393655368849994e-155,0.1714285714285714
+214,Give me all professional skateboarders from Sweden.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all professional skateboarders from Sweden.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?subject ?name
+WHERE {
+  ?subject dbo: nationality ""Sweden"" .
+  ?subject dbo:occupation ""Professional skateboarder"" .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbp: <http://dbpedia.org/property/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { ?uri dbo:occupation dbr:Skateboarder { ?uri dbo:birthPlace dbr:Sweden } UNION { ?uri dbo:birthPlace ?place . ?place dbo:country dbr:Sweden } },213.74693179130557,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?subject ?name
+WHERE {
+  ?subject dbo: nationality ""Sweden"" .
+  ?subject dbo:occupation ""Professional skateboarder"" .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}",False,False,0.18566321131366736,0.2558139534883721
+210,Which monarchs of the United Kingdom were married to a German?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which monarchs of the United Kingdom were married to a German?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?monarch ?spouse
+WHERE {
+  ?monarch dbo:spouse ?spouse .
+  ?spouse dbo:nationality ""German"" .
+  ?monarch dbo:type dbo:Monarch .
+  FILTER (lang(?monarch) = ""en"")
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX yago: <http://dbpedia.org/class/yago/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri WHERE { ?uri rdf:type yago:WikicatMonarchsOfTheUnitedKingdom ; dbo:spouse ?spouse . ?spouse dbo:birthPlace res:Germany },276.38547015190125,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?monarch ?spouse
+WHERE {
+  ?monarch dbo:spouse ?spouse .
+  ?spouse dbo:nationality ""German"" .
+  ?monarch dbo:type dbo:Monarch .
+  FILTER (lang(?monarch) = ""en"")
+}",True,True,0.17950199148531412,0.23404255319148934
+199,Give me all Argentine films.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all Argentine films.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?film
+WHERE {
+  ?film dbo:country ""Argentina"" .
+  ?film dbo:genre ?genre .
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX yago: <http://dbpedia.org/class/yago/> PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri WHERE { { ?uri rdf:type yago:ArgentineFilms } UNION { ?uri rdf:type dbo:Film { ?uri dbo:country res:Argentina } UNION { ?uri dbp:country ""Argentina""@en } } }",152.31608700752258,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?film
+WHERE {
+  ?film dbo:country ""Argentina"" .
+  ?film dbo:genre ?genre .
+}",True,True,0.06831801278534949,0.2682926829268293
+203,How did Michael Jackson die?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How did Michael Jackson die?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?cause
+WHERE {
+  ?person dbo:name ""Michael Jackson"" .
+  ?person dbo:causeOfDeath ?cause .
+}
+```
+",SELECT DISTINCT ?s WHERE { <http://dbpedia.org/resource/Michael_Jackson> <http://dbpedia.org/property/deathCause> ?s },155.933247089386,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?cause
+WHERE {
+  ?person dbo:name ""Michael Jackson"" .
+  ?person dbo:causeOfDeath ?cause .
+}",True,True,4.777946850498661e-155,0.16666666666666666
+197,Which U.S. state has been admitted latest?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which U.S. state has been admitted latest?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?stateLabel WHERE {
+  ?state dbo:country ""United States""^^xsd:string .
+  ?state dbo:admissionDate ?admissionDate .
+  FILTER (BOUND(?admissionDate) )
+  ?state dbo:name ?stateName .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}
+ORDER BY DESC(?admissionDate)
+LIMIT 1
+```
+",PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX dct: <http://purl.org/dc/terms/> SELECT DISTINCT ?uri WHERE { ?uri dct:subject dbc:States_of_the_United_States ; <http://dbpedia.org/property/admittancedate> ?x } ORDER BY DESC(?x) LIMIT 1,291.7996652126312,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?stateLabel WHERE {
+  ?state dbo:country ""United States""^^xsd:string .
+  ?state dbo:admissionDate ?admissionDate .
+  FILTER (BOUND(?admissionDate) )
+  ?state dbo:name ?stateName .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}
+ORDER BY DESC(?admissionDate)
+LIMIT 1",False,False,2.007190643063377e-78,0.16981132075471694
+196,Which classes does the Millepede belong to?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which classes does the Millepede belong to?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?class
+WHERE {
+  <http://dbpedia.org/resource/Millepede> dbo:class ?class .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?String WHERE { res:Millipede dbp:taxon ?String },150.40075850486755,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?class
+WHERE {
+  <http://dbpedia.org/resource/Millepede> dbo:class ?class .
+}",True,True,0.2803950119994003,0.29629629629629634
+188,Give me the homepage of Forbes.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me the homepage of Forbes.
+```sparql
+PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?homepage
+WHERE {
+  dbpedia:Forbes rdfs:seeAlso ?homepage .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> SELECT DISTINCT ?string WHERE { res:Forbes foaf:homepage ?string },163.175546169281,"PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?homepage
+WHERE {
+  dbpedia:Forbes rdfs:seeAlso ?homepage .
+}",True,True,6.13274920178966e-155,0.19230769230769232
+187,Who is the husband of Amanda Palmer?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the husband of Amanda Palmer?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?husband
+WHERE {
+  ?person dbo:name ""Amanda Palmer"" .
+  ?person dbo:spouse ?husband .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/ontology/spouse> <http://dbpedia.org/resource/Amanda_Palmer> },151.6059124469757,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?husband
+WHERE {
+  ?person dbo:name ""Amanda Palmer"" .
+  ?person dbo:spouse ?husband .
+}",True,True,4.777946850498661e-155,0.16666666666666666
+176,Who painted The Storm on the Sea of Galilee?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who painted The Storm on the Sea of Galilee?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?artist
+WHERE {
+  ?painting dbo:wikiPageRedirects ?page .
+  ?page dbo:title ""The Storm on the Sea of Galilee"" .
+  ?painting dbo:artist ?artist .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?uri WHERE { res:The_Storm_on_the_Sea_of_Galilee dbo:author ?uri },192.31997203826904,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?artist
+WHERE {
+  ?painting dbo:wikiPageRedirects ?page .
+  ?page dbo:title ""The Storm on the Sea of Galilee"" .
+  ?painting dbo:artist ?artist .
+}",True,True,0.1029370476768733,0.19444444444444445
+62,What is the highest place of Karakoram?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the highest place of Karakoram?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?highestPlace
+WHERE {
+  ?mountain dbo:highestPoint ?highestPlace .
+  FILTER ( ?mountain = <http://dbpedia.org/resource/Karakoram> )
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { res:Karakoram dbp:highest ?uri },178.26885771751404,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?highestPlace
+WHERE {
+  ?mountain dbo:highestPoint ?highestPlace .
+  FILTER ( ?mountain = <http://dbpedia.org/resource/Karakoram> )
+}",True,True,0.14528679532351443,0.22580645161290322
+173,When did Finland join the EU?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When did Finland join the EU?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  ?country dbo:name ""Finland"" .
+  ?country dbo:joinedEU ?date .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?date WHERE { res:Finland dbp:accessioneudate ?date },148.71887755393982,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  ?country dbo:name ""Finland"" .
+  ?country dbo:joinedEU ?date .
+}",True,True,0.20038908500140973,0.28571428571428575
+168,Which actors play in Big Bang Theory?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which actors play in Big Bang Theory?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?actor
+WHERE {
+  ?actor dbo:playsIn ?movie .
+  ?movie dbo:title ""Big Bang Theory"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/The_Big_Bang_Theory> <http://dbpedia.org/ontology/starring> ?uri },155.66373825073242,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?actor
+WHERE {
+  ?actor dbo:playsIn ?movie .
+  ?movie dbo:title ""Big Bang Theory"" .
+}",True,True,5.721523971118206e-155,0.1923076923076923
+166,Which computer scientist won an oscar?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which computer scientist won an oscar?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?computerScientist ?oscar
+WHERE {
+  ?computerScientist dbo:occupation ""Computer Scientist"" .
+  ?computerScientist dbo:award ?oscar .
+  FILTER (regex(?oscar, ""Oscar"", ""i""))
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/ontology/field> <http://dbpedia.org/resource/Computer_science> ; <http://dbpedia.org/ontology/award> <http://dbpedia.org/resource/Academy_Award> },191.104984998703,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?computerScientist ?oscar
+WHERE {
+  ?computerScientist dbo:occupation ""Computer Scientist"" .
+  ?computerScientist dbo:award ?oscar .
+  FILTER (regex(?oscar, ""Oscar"", ""i""))
+}",True,True,5.253441210115029e-155,0.15624999999999997
+160,Who wrote Harry Potter?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who wrote Harry Potter?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?author
+WHERE {
+  ?book dbo:author ?author .
+  FILTER (regex(?book, ""Harry Potter"", ""i""))
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Harry_Potter> <http://dbpedia.org/property/author> ?uri },155.22528219223022,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?author
+WHERE {
+  ?book dbo:author ?author .
+  FILTER (regex(?book, ""Harry Potter"", ""i""))
+}",True,True,4.777946850498661e-155,0.15384615384615383
+158,Give me all writers that won the Nobel Prize in literature.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all writers that won the Nobel Prize in literature.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?writer
+WHERE {
+  ?writer dbo:birthPlace ?birthPlace .
+  ?writer dbo:deathPlace ?deathPlace .
+  ?writer dbo:award ?award .
+  ?award dbo:name ""Nobel Prize in Literature"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Writer> ; <http://dbpedia.org/ontology/award> <http://dbpedia.org/resource/Nobel_Prize_in_Literature> },206.7883439064026,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?writer
+WHERE {
+  ?writer dbo:birthPlace ?birthPlace .
+  ?writer dbo:deathPlace ?deathPlace .
+  ?writer dbo:award ?award .
+  ?award dbo:name ""Nobel Prize in Literature"" .
+}",True,True,4.803430137390974e-155,0.14705882352941177
+157,Give me English actors starring in Lovesick.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me English actors starring in Lovesick.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?actor ?actorLabel
+WHERE {
+  ?movie dbo:title ""Lovesick"" .
+  ?movie dbo:starring ?actor .
+  ?actor rdfs:label ?actorLabel .
+  FILTER (LANG(?actorLabel) = ""en"")
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Lovesick_(1983_film)> dbo:starring ?uri . ?uri dbo:birthPlace ?city . ?city dbo:country <http://dbpedia.org/resource/United_Kingdom> },271.35178542137146,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?actor ?actorLabel
+WHERE {
+  ?movie dbo:title ""Lovesick"" .
+  ?movie dbo:starring ?actor .
+  ?actor rdfs:label ?actorLabel .
+  FILTER (LANG(?actorLabel) = ""en"")
+}",True,True,2.394920189989304e-78,0.25
+155,What is the nick name of Baghdad?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the nick name of Baghdad?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?nickname
+WHERE {
+  dbp:alma mater ?city .
+  ?city dbo:name ""Baghdad"" .
+  ?city dbp:nickname ?nickname .
+}
+```",PREFIX dbr: <http://dbpedia.org/resource/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> SELECT ?nm WHERE { dbr:Baghdad foaf:nick ?nm },169.8038785457611,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?nickname
+WHERE {
+  dbp:alma mater ?city .
+  ?city dbo:name ""Baghdad"" .
+  ?city dbp:nickname ?nickname .
+}",False,False,4.922348962291463e-155,0.1724137931034483
+150,In which city was the president of Montenegro born?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: In which city was the president of Montenegro born?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?city
+WHERE {
+  ?person dbo:presidentOf <http://dbpedia.org/resource/Montenegro> .
+  ?person dbo:birthDate ?date .
+  ?person dbo:birthPlace ?city .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/title> dbr:President_of_Montenegro ; dbo:birthPlace ?uri . ?uri dbo:type dbr:Capital_city },189.55446767807007,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?city
+WHERE {
+  ?person dbo:presidentOf <http://dbpedia.org/resource/Montenegro> .
+  ?person dbo:birthDate ?date .
+  ?person dbo:birthPlace ?city .
+}",True,True,0.1392908359945467,0.25
+149,Which U.S. state has the highest population density?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which U.S. state has the highest population density?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state ?populationDensity
+WHERE {
+  ?state dbo:country ""United States"" .
+  ?state dbp:populationDensity ?populationDensity .
+}
+ORDER BY DESC(?populationDensity)
+LIMIT 1
+```
+",SELECT ?uri WHERE { ?uri <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/United_States> . ?uri <http://dbpedia.org/ontology/capital> ?capital . ?uri <http://dbpedia.org/property/densityrank> ?density . OPTIONAL {?uri <http://www.w3.org/2000/01/rdf-schema#label> ?string. FILTER (lang(?string) = 'en') } } ORDER BY ASC(?density) LIMIT 1,182.85502934455872,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state ?populationDensity
+WHERE {
+  ?state dbo:country ""United States"" .
+  ?state dbp:populationDensity ?populationDensity .
+}
+ORDER BY DESC(?populationDensity)
+LIMIT 1",True,True,2.2675234469187517e-78,0.1956521739130435
+25,What is the longest river in China?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the longest river in China?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?riverLabel WHERE {
+  ?river dbo:length ?length .
+  ?river dbo:country ""China"" .
+  FILTER(?length = (SELECT MAX(?length2) WHERE { ?river2 dbo:length ?length2 . ?river2 dbo:country ""China"" . }) )
+  ?river dbo:name ?riverLabel .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/River> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/China> ; <http://dbpedia.org/property/length> ?l } ORDER BY DESC(?l) OFFSET 0 LIMIT 1,242.69933986663816,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?riverLabel WHERE {
+  ?river dbo:length ?length .
+  ?river dbo:country ""China"" .
+  FILTER(?length = (SELECT MAX(?length2) WHERE { ?river2 dbo:length ?length2 . ?river2 dbo:country ""China"" . }) )
+  ?river dbo:name ?riverLabel .
+}",False,True,3.3999706075993257e-155,0.08888888888888889
+143,What is the area code of Berlin?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the area code of Berlin?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?areaCode
+WHERE {
+  dbp:areaCode ?areaCode .
+  ?city dbo:name ""Berlin"" .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?string WHERE { res:Berlin dbo:areaCode ?string },145.19515538215637,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?areaCode
+WHERE {
+  dbp:areaCode ?areaCode .
+  ?city dbo:name ""Berlin"" .
+}",False,False,0.17181529671327242,0.25
+140,How many scientists graduated from an Ivy League university?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many scientists graduated from an Ivy League university?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(DISTINCT ?scientist) AS ?count)
+WHERE {
+  ?scientist rdf:type dbo:Scientist .
+  ?scientist dbo:almaMater ?university .
+  ?university dbo:isPartOf ?league .
+  ?league dbo:name ""Ivy League"" .
+}
+```
+",SELECT (COUNT(DISTINCT ?uri) AS ?c) WHERE { ?uri a <http://dbpedia.org/ontology/Scientist> ; <http://dbpedia.org/ontology/almaMater> ?university . ?university <http://dbpedia.org/ontology/affiliation> <http://dbpedia.org/resource/Ivy_League> ; a <http://dbpedia.org/ontology/University> },287.912897348404,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(DISTINCT ?scientist) AS ?count)
+WHERE {
+  ?scientist rdf:type dbo:Scientist .
+  ?scientist dbo:almaMater ?university .
+  ?university dbo:isPartOf ?league .
+  ?league dbo:name ""Ivy League"" .
+}",True,True,2.1733317480883487e-78,0.18181818181818185
+139,Which professional surfers were born in Australia?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which professional surfers were born in Australia?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ? surfer ? surferLabel
+WHERE {
+  ? surfer dbo:birthPlace dbp:Australia .
+  ? surfer dbo:profession dbp:Surfer .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { { ?uri dbo:occupation res:Surfer ; dbo:birthPlace res:Australia } UNION { ?uri dbo:occupation res:Surfer ; dbo:birthPlace ?place . ?place dbo:country res:Australia } },211.3909101486206,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ? surfer ? surferLabel
+WHERE {
+  ? surfer dbo:birthPlace dbp:Australia .
+  ? surfer dbo:profession dbp:Surfer .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}",False,False,0.10232614386509858,0.22727272727272724
+137,Give me all Dutch parties.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all Dutch parties.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?party
+WHERE {
+  ?party dbo:country ""Netherlands"" .
+  ?party dbo:type dbo:PoliticalParty .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/PoliticalParty> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Netherlands> },148.52830481529236,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?party
+WHERE {
+  ?party dbo:country ""Netherlands"" .
+  ?party dbo:type dbo:PoliticalParty .
+}",True,True,6.00795009506529e-155,0.18518518518518515
+136,How many moons does Mars have?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many moons does Mars have?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+
+SELECT (COUNT(?moon) AS ?count)
+WHERE {
+  ?planet dbo:name ""Mars"" .
+  ?planet dbo:numberOfMoons ?moon .
+}
+```
+",SELECT DISTINCT ?n WHERE { <http://dbpedia.org/resource/Mars> <http://dbpedia.org/property/satellites> ?n },158.98371744155884,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+
+SELECT (COUNT(?moon) AS ?count)
+WHERE {
+  ?planet dbo:name ""Mars"" .
+  ?planet dbo:numberOfMoons ?moon .
+}",True,True,4.65988169467104e-155,0.15384615384615383
+134,What is Batman's real name?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is Batman's real name?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?realName
+WHERE {
+  <http://dbpedia.org/resource/Batman> dbo:name ?realName .
+}
+```
+","SELECT DISTINCT ?label WHERE { <http://dbpedia.org/resource/Batman> <http://xmlns.com/foaf/0.1/name> ?label FILTER ( str(?label) != ""Batman"" ) }",144.5387201309204,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?realName
+WHERE {
+  <http://dbpedia.org/resource/Batman> dbo:name ?realName .
+}",True,True,3.00466076572634e-78,0.1851851851851852
+132,What is Elon Musk famous for?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is Elon Musk famous for?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?occupation
+WHERE {
+  <http://dbpedia.org/resource/Elon_Musk> dbo:occupation ?occupation .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Elon_Musk> <http://dbpedia.org/ontology/knownFor> ?uri },143.94698238372803,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?occupation
+WHERE {
+  <http://dbpedia.org/resource/Elon_Musk> dbo:occupation ?occupation .
+}",True,True,3.00466076572634e-78,0.2380952380952381
+128,Who is the author of WikiLeaks?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the author of WikiLeaks?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?author
+WHERE {
+  ?wikiLeaks dbo:author ?author .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX onto: <http://dbpedia.org/ontology/> SELECT ?uri WHERE { res:WikiLeaks onto:author ?uri },120.57792973518372,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?author
+WHERE {
+  ?wikiLeaks dbo:author ?author .
+}",True,True,5.578095830812366e-155,0.22222222222222224
+126,Sean Parnell was the governor of which U.S. state?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Sean Parnell was the governor of which U.S. state?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state
+WHERE {
+  ?person dbo:name ""Sean Parnell"" .
+  ?person dbo:governorOf ?state .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { res:Sean_Parnell dbo:region ?uri },146.60706758499146,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state
+WHERE {
+  ?person dbo:name ""Sean Parnell"" .
+  ?person dbo:governorOf ?state .
+}",True,True,0.1531682455208201,0.2413793103448276
+125,How many years was the Ford Model T manufactured?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many years was the Ford Model T manufactured?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?years
+WHERE {
+  ?car dbo:productionYears ?years .
+  FILTER (regex(?car, ""Ford Model T"", ""i""))
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX res: <http://dbpedia.org/resource/> SELECT ?years WHERE { res:Ford_Model_T dbo:productionEndYear ?end ; dbo:productionStartYear ?start. BIND ( ( year(xsd:date(?end)) - year(xsd:date(?start)) ) AS ?years) },154.72114491462708,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?years
+WHERE {
+  ?car dbo:productionYears ?years .
+  FILTER (regex(?car, ""Ford Model T"", ""i""))
+}",True,True,0.15999505891980847,0.17777777777777778
+124,When was Carlo Giuliani shot?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When was Carlo Giuliani shot?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Carlo_Giuliani> dbo:deathDate ?date .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT xsd:date(?date) WHERE { res:Death_of_Carlo_Giuliani dbo:deathDate ?date },149.99509072303772,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Carlo_Giuliani> dbo:deathDate ?date .
+}",True,True,0.23505204106959587,0.3333333333333333
+123,Give me all animals that are extinct.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all animals that are extinct.
+```sparql
+PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?animal
+WHERE {
+  ?animal rdf:type dbpedia:Animal .
+  ?animal dbpedia:extinct ?extinct .
+  FILTER(?extinct = ""true"")
+}
+```
+","SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Animal> ; <http://dbpedia.org/ontology/conservationStatus> ""EX"" }",208.37026953697205,"PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?animal
+WHERE {
+  ?animal rdf:type dbpedia:Animal .
+  ?animal dbpedia:extinct ?extinct .
+  FILTER(?extinct = ""true"")
+}",True,True,5.5928682194669055e-155,0.16666666666666666
+122,Who was the wife of President Lincoln?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who was the wife of President Lincoln?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?wife
+WHERE {
+  ?president dbo:spouse ?wife .
+  FILTER ( ?president = <http://dbpedia.org/resource/Abraham_Lincoln> )
+}
+```
+",PREFIX dbr: <http://dbpedia.org/resource/> PREFIX onto: <http://dbpedia.org/ontology/> SELECT ?uri ?string WHERE { dbr:Abraham_Lincoln onto:spouse ?uri },165.29399919509888,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?wife
+WHERE {
+  ?president dbo:spouse ?wife .
+  FILTER ( ?president = <http://dbpedia.org/resource/Abraham_Lincoln> )
+}",True,True,5.359624986283916e-155,0.1935483870967742
+111,How many awards has Bertrand Russell?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many awards has Bertrand Russell?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT (COUNT(?award) AS ?numAwards)
+WHERE {
+  ?person dbo:name ""Bertrand Russell"" .
+  ?person dbo:award ?award .
+}
+```
+",PREFIX dbr: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT (COUNT(?Awards) AS ?Counter) WHERE { dbr:Bertrand_Russell dbp:awards ?Awards },159.08836698532104,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT (COUNT(?award) AS ?numAwards)
+WHERE {
+  ?person dbo:name ""Bertrand Russell"" .
+  ?person dbo:award ?award .
+}",True,True,0.1423071532720465,0.23529411764705882
+117,Is Pamela Anderson a vegan?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Is Pamela Anderson a vegan?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?x WHERE {
+  ?x dbo:name ""Pamela Anderson"" .
+  ?x dbo:diet ""Vegan"" .
+}
+```
+",PREFIX dbr: <http://dbpedia.org/resource/> ASK WHERE { dbr:Pamela_Anderson a <http://dbpedia.org/class/yago/WikicatAmericanVegans> },143.236554145813,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?x WHERE {
+  ?x dbo:name ""Pamela Anderson"" .
+  ?x dbo:diet ""Vegan"" .
+}",True,True,4.777946850498661e-155,0.15384615384615385
+59,Which space probes were sent into orbit around the sun?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which space probes were sent into orbit around the sun?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?probe
+WHERE {
+  ?probe dbo:type dbo:SpaceProbe .
+  ?probe dbo:orbit dbp:Sun .
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX dct: <http://purl.org/dc/terms/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?s WHERE { ?s dct:subject dbc:Missions_to_the_Sun ; rdf:type ?type FILTER ( ?type IN (dbo:Satellite, dbo:ArtificialSatellite) ) }",149.98577308654785,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?probe
+WHERE {
+  ?probe dbo:type dbo:SpaceProbe .
+  ?probe dbo:orbit dbp:Sun .
+}",True,True,0.096232641408119,0.1904761904761905
+113,Which German cities have more than 250000 inhabitants?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which German cities have more than 250000 inhabitants?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?city ?population
+WHERE {
+  ?city dbo:country ?germany .
+  ?city dbp:population ?population .
+  FILTER(?population > 250000)
+}
+```
+",SELECT DISTINCT ?uri WHERE { { ?uri a <http://dbpedia.org/ontology/City> } UNION { ?uri a <http://dbpedia.org/ontology/Town> } ?uri <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Germany> ; <http://dbpedia.org/ontology/populationTotal> ?population FILTER ( ?population > 250000 ) },176.17736196517944,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?city ?population
+WHERE {
+  ?city dbo:country ?germany .
+  ?city dbp:population ?population .
+  FILTER(?population > 250000)
+}",True,True,4.997346060430395e-155,0.1794871794871795
+104,Who is the daughter of Robert Kennedy married to?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the daughter of Robert Kennedy married to?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  ?daughter dbo:spouse ?spouse .
+  ?daughter dbo:father <http://dbpedia.org/resource/Robert_Kennedy> .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Robert_F._Kennedy> <http://dbpedia.org/ontology/child> ?child . ?child <http://dbpedia.org/ontology/spouse> ?uri },164.00472688674927,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  ?daughter dbo:spouse ?spouse .
+  ?daughter dbo:father <http://dbpedia.org/resource/Robert_Kennedy> .
+}",True,True,5.186903763466333e-155,0.1923076923076923
+10,How many students does the Free University of Amsterdam have?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many students does the Free University of Amsterdam have?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?count
+WHERE {
+  ?university dbo:name ""Free University of Amsterdam"" .
+  ?university dbo:numberOfStudents ?count .
+}
+```
+",SELECT DISTINCT ?num WHERE { dbr:Vrije_Universiteit_Amsterdam <http://dbpedia.org/ontology/numberOfStudents> ?num },149.1530478000641,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?count
+WHERE {
+  ?university dbo:name ""Free University of Amsterdam"" .
+  ?university dbo:numberOfStudents ?count .
+}",True,True,4.550160538169341e-155,0.15384615384615383
+1,What is the revenue of IBM?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the revenue of IBM?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?revenue
+WHERE {
+  <http://dbpedia.org/resource/IBM> dbo:revenue ?revenue .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX onto: <http://dbpedia.org/ontology/> SELECT ?number WHERE { res:IBM onto:revenue ?number },138.79797959327698,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?revenue
+WHERE {
+  <http://dbpedia.org/resource/IBM> dbo:revenue ?revenue .
+}",True,True,6.373704167435469e-155,0.24000000000000002
+178,How many James Bond movies do exist?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many James Bond movies do exist?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT (COUNT(DISTINCT ?movie)) AS ?count
+WHERE {
+  ?movie dbo:director ?director .
+  ?director dbo:name ""Eon Productions"" .
+  ?movie dbo:title ?title .
+  FILTER (regex(?title, ""James Bond"", ""i""))
+}
+```
+",SELECT (COUNT(DISTINCT ?uri) AS ?c) WHERE { ?uri dct:subject <http://dbpedia.org/resource/Category:James_Bond_films> },214.8233418464661,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT (COUNT(DISTINCT ?movie)) AS ?count
+WHERE {
+  ?movie dbo:director ?director .
+  ?director dbo:name ""Eon Productions"" .
+  ?movie dbo:title ?title .
+  FILTER (regex(?title, ""James Bond"", ""i""))
+}",False,True,4.946973787525366e-155,0.15789473684210525
+129,Who does the voice of Bart Simpson?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who does the voice of Bart Simpson?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?actor
+WHERE {
+  ?actor dbo:voiceOf ?character .
+  ?character dbo:name ""Bart Simpson"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Bart_Simpson> <http://dbpedia.org/property/voiceactor> ?uri },200.4780716896057,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?actor
+WHERE {
+  ?actor dbo:voiceOf ?character .
+  ?character dbo:name ""Bart Simpson"" .
+}",True,True,4.447844384793538e-155,0.15384615384615383
+183,Who was Tom Hanks married to?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who was Tom Hanks married to?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  <http://dbpedia.org/resource/Tom_Hanks> dbo:spouse ?spouse .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?uri WHERE { dbr:Tom_Hanks dbo:spouse ?uri },145.67661261558533,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  <http://dbpedia.org/resource/Tom_Hanks> dbo:spouse ?spouse .
+}",True,True,0.21651956746181059,0.3076923076923077
+181,Through which countries does the Yenisei river flow?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Through which countries does the Yenisei river flow?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?country
+WHERE {
+  ?river dbo:location ?country .
+  FILTER ( ?river = <http://dbpedia.org/resource/Yenisei_River> )
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?uri WHERE { res:Yenisei_River <http://dbpedia.org/ontology/country> ?uri },224.5306785106659,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?country
+WHERE {
+  ?river dbo:location ?country .
+  FILTER ( ?river = <http://dbpedia.org/resource/Yenisei_River> )
+}",True,True,2.7602089607980654e-78,0.23529411764705882
+7,Give me all cars that are produced in Germany.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all cars that are produced in Germany.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?car
+WHERE {
+  ?car dbo:countryOfOrigin ""Germany"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Automobile> { ?uri <http://dbpedia.org/ontology/assembly> <http://dbpedia.org/resource/Germany> } UNION { ?uri <http://dbpedia.org/property/assembly> <http://dbpedia.org/resource/Germany> } UNION { { ?uri <http://dbpedia.org/ontology/manufacturer> ?x } UNION { ?uri <http://dbpedia.org/property/manufacturer> ?x } { ?x <http://dbpedia.org/ontology/locationCountry> <http://dbpedia.org/resource/Germany> } UNION { ?x <http://dbpedia.org/ontology/location> <http://dbpedia.org/resource/Germany> } } },125.21885848045348,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?car
+WHERE {
+  ?car dbo:countryOfOrigin ""Germany"" .
+}",True,True,1.1001721750823912e-155,0.16129032258064516
+135,When did Michael Jackson die?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When did Michael Jackson die?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Michael_Jackson> dbo:deathDate ?date .
+}
+```
+",SELECT DISTINCT ?date WHERE { <http://dbpedia.org/resource/Michael_Jackson> <http://dbpedia.org/ontology/deathDate> ?date },144.6025230884552,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Michael_Jackson> dbo:deathDate ?date .
+}",True,True,0.1892240568795935,0.2857142857142857
+50,What is the highest volcano in Africa?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the highest volcano in Africa?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?name ?elevation
+WHERE {
+  ?volcano dbo:country ""Africa""^^xsd:string .
+  ?volcano dbo:elevation ?elevation .
+  FILTER(?elevation = (SELECT MAX(?elevation) WHERE { ?volcano dbo:country ""Africa""^^xsd:string . ?volcano dbo:elevation ?elevation. }))
+  ?volcano dbo:name ?name .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Volcano> ; <http://dbpedia.org/ontology/locatedInArea> ?area . ?area dct:subject dbc:Countries_in_Africa . ?uri <http://dbpedia.org/ontology/elevation> ?elevation } ORDER BY DESC(?elevation) LIMIT 1,259.51761746406555,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?name ?elevation
+WHERE {
+  ?volcano dbo:country ""Africa""^^xsd:string .
+  ?volcano dbo:elevation ?elevation .
+  FILTER(?elevation = (SELECT MAX(?elevation) WHERE { ?volcano dbo:country ""Africa""^^xsd:string . ?volcano dbo:elevation ?elevation. }))
+  ?volcano dbo:name ?name .
+}",False,True,3.962327745598725e-155,0.13636363636363635
+39,Which poet wrote the most books?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which poet wrote the most books?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?poet ?count
+WHERE {
+  ?poet dbo:birthPlace ?birthPlace .
+  ?poet dbo:deathPlace ?deathPlace .
+  ?poet dbo:occupation ?occupation .
+  FILTER (str(?occupation) = ""Poet"")
+  ?poet dbp:books ?books .
+  GROUP BY ?poet
+  ORDER BY DESC(?count)
+  LIMIT 1
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/ontology/occupation> <http://dbpedia.org/resource/Poet> . ?x <http://dbpedia.org/ontology/author> ?uri . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Book> . } ORDER BY DESC(COUNT(?x)) OFFSET 0 LIMIT 1,260.8639497756958,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?poet ?count
+WHERE {
+  ?poet dbo:birthPlace ?birthPlace .
+  ?poet dbo:deathPlace ?deathPlace .
+  ?poet dbo:occupation ?occupation .
+  FILTER (str(?occupation) = ""Poet"")
+  ?poet dbp:books ?books .
+  GROUP BY ?poet
+  ORDER BY DESC(?count)
+  LIMIT 1
+}",False,False,5.688785400644042e-155,0.18000000000000002
+83,Give me all gangsters from the prohibition era.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all gangsters from the prohibition era.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?subject ?label
+WHERE {
+  ?subject dbo:occupation ""Gangster"" .
+  ?subject dbo:birthDate ?birthDate .
+  FILTER ( ?birthDate >= ""1920-01-01""^^xsd:date )
+  ?subject rdfs:label ?label .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { ?uri dbo:occupation dbr:Gangster ; dct:subject dbc:Prohibition-era_gangsters },278.8916573524475,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?subject ?label
+WHERE {
+  ?subject dbo:occupation ""Gangster"" .
+  ?subject dbo:birthDate ?birthDate .
+  FILTER ( ?birthDate >= ""1920-01-01""^^xsd:date )
+  ?subject rdfs:label ?label .
+}",True,True,0.09970617113450042,0.19999999999999998
+71,Give me all spacecrafts that flew to Mars.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all spacecrafts that flew to Mars.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?spacecraft WHERE {
+  ?spacecraft dbo:wikiPageRedirects* dbp:Mars_exploration
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX dct: <http://purl.org/dc/terms/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?s WHERE { ?s dct:subject dbc:Mars_rovers ; rdf:type ?type FILTER ( ?type IN (dbo:Satellite, dbo:ArtificialSatellite) ) }",135.62066221237183,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?spacecraft WHERE {
+  ?spacecraft dbo:wikiPageRedirects* dbp:Mars_exploration
+}",True,True,0.0787911078069031,0.20512820512820515
+213,Show me all Czech movies.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Show me all Czech movies.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?movie
+WHERE {
+  ?movie dbo:country ""Czech Republic"" .
+  ?movie dbo:genre ""Film"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Film> ; <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Czech_Republic> },148.0196771621704,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?movie
+WHERE {
+  ?movie dbo:country ""Czech Republic"" .
+  ?movie dbo:genre ""Film"" .
+}",True,True,5.859491021246916e-155,0.17857142857142858
+209,Give me all taikonauts.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all taikonauts.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?taikonaut
+WHERE {
+  ?taikonaut dbo:occupation ""Taikonaut"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { { ?uri a <http://dbpedia.org/ontology/Astronaut> ; <http://dbpedia.org/ontology/nationality> <http://dbpedia.org/resource/People's_Republic_of_China> } UNION { ?uri a <http://dbpedia.org/ontology/Astronaut> ; <http://dbpedia.org/ontology/nationality> <http://dbpedia.org/resource/China> } },134.37149477005005,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?taikonaut
+WHERE {
+  ?taikonaut dbo:occupation ""Taikonaut"" .
+}",True,True,4.351265360873267e-155,0.1851851851851852
+105,Which countries have more than ten volcanoes?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which countries have more than ten volcanoes?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbp:volcano ?volcano .
+  FILTER (COUNT(?volcano) > 10)
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?x a <http://dbpedia.org/ontology/Volcano> ; <http://dbpedia.org/ontology/locatedInArea> ?uri . ?uri a <http://dbpedia.org/ontology/Country> } GROUP BY ?uri HAVING ( COUNT(?x) > 10 ),178.22277355194092,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbp:volcano ?volcano .
+  FILTER (COUNT(?volcano) > 10)
+}",True,False,5.709838857194673e-155,0.17073170731707316
+52,Give me all movies with Tom Cruise.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all movies with Tom Cruise.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?movie
+WHERE {
+  ?movie dbo:starring ?actor .
+  ?actor dbo:name ""Tom Cruise"" .
+}
+```
+","PREFIX res: <http://dbpedia.org/resource/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX onto: <http://dbpedia.org/ontology/> PREFIX prop: <http://dbpedia.org/property/> SELECT DISTINCT ?uri WHERE { ?uri rdf:type onto:Film { ?uri prop:starring res:Tom_Cruise } UNION { ?uri onto:starring res:Tom_Cruise } OPTIONAL { ?uri rdfs:label ?string FILTER ( lang(?string) = ""en"" ) } }",147.24949741363525,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?movie
+WHERE {
+  ?movie dbo:starring ?actor .
+  ?actor dbo:name ""Tom Cruise"" .
+}",True,True,9.177260938256255e-79,0.16326530612244897
+102,When did Dracula's creator die?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When did Dracula's creator die?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?deathYear
+WHERE {
+  ?author dbo:birthDate ?birthDate .
+  ?author dbo:deathDate ?deathDate .
+  FILTER ( ?author = <http://dbpedia.org/resource/Bram_Stoker> )
+  BIND(YEAR(?deathDate) AS ?deathYear)
+}
+```
+",SELECT DISTINCT xsd:date(?date) WHERE { <http://dbpedia.org/resource/Count_Dracula> <http://dbpedia.org/ontology/creator> ?x . ?x <http://dbpedia.org/ontology/deathDate> ?date. },287.3737244606018,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?deathYear
+WHERE {
+  ?author dbo:birthDate ?birthDate .
+  ?author dbo:deathDate ?deathDate .
+  FILTER ( ?author = <http://dbpedia.org/resource/Bram_Stoker> )
+  BIND(YEAR(?deathDate) AS ?deathYear)
+}",True,True,4.039187183453553e-155,0.13157894736842105
+21,Who created English Wikipedia?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who created English Wikipedia?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?creator
+WHERE {
+  ?page wdt:P31 wd:Q11424.
+  ?page wdt:P170 ?creator .
+}
+```
+",PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX onto: <http://dbpedia.org/ontology/> SELECT ?uri WHERE { <http://dbpedia.org/resource/Wikipedia> onto:author ?uri },163.08591556549072,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?creator
+WHERE {
+  ?page wdt:P31 wd:Q11424.
+  ?page wdt:P170 ?creator .
+}",False,False,5.801180374671126e-155,0.20689655172413796
+34,Give me all female German chancellors.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all female German chancellors.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?chancellor ?chancellorLabel
+WHERE {
+  ?chancellor rdf:type dbo:Chancellor .
+  ?chancellor dbo:nationality ""German"" .
+  ?chancellor dbo:gender ""Female"" .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?uri WHERE { res:Chancellor_of_Germany dbp:incumbent ?uri },293.15154695510864,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?chancellor ?chancellorLabel
+WHERE {
+  ?chancellor rdf:type dbo:Chancellor .
+  ?chancellor dbo:nationality ""German"" .
+  ?chancellor dbo:gender ""Female"" .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}",False,False,1.9638269220815205e-78,0.18421052631578946
+145,Who owns Aldi?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who owns Aldi?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?owner
+WHERE {
+  ?company dbo:parentOrganization ?owner .
+  FILTER (regex(?company, ""Aldi"", ""i""))
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?uri WHERE { res:Aldi dbp:founders ?uri },146.6908893585205,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?owner
+WHERE {
+  ?company dbo:parentOrganization ?owner .
+  FILTER (regex(?company, ""Aldi"", ""i""))
+}",True,True,0.16195570128532405,0.23333333333333334
+154,Which books were written by Danielle Steel?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which books were written by Danielle Steel?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?book
+WHERE {
+  ?book dbo:author ?author .
+  ?author dbo:name ""Danielle Steel"" .
+}
+```
+",PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX onto: <http://dbpedia.org/ontology/> SELECT ?uri WHERE { ?uri rdf:type onto:Book ; onto:author <http://dbpedia.org/resource/Danielle_Steel> },141.27817559242249,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?book
+WHERE {
+  ?book dbo:author ?author .
+  ?author dbo:name ""Danielle Steel"" .
+}",True,True,4.872737587683037e-155,0.16666666666666669
+198,Who was influenced by Socrates?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who was influenced by Socrates?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?influenced
+WHERE {
+  ?influenced dbo:influencedBy <http://dbpedia.org/resource/Socrates> .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/ontology/influencedBy> <http://dbpedia.org/resource/Socrates> },142.09859538078308,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?influenced
+WHERE {
+  ?influenced dbo:influencedBy <http://dbpedia.org/resource/Socrates> .
+}",True,True,7.053663163619216e-155,0.2727272727272727
+162,How deep is Lake Chiemsee?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How deep is Lake Chiemsee?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?depth
+WHERE {
+  ?lake dbo:name ""Lake Chiemsee"" .
+  ?lake dbp:depth ?depth .
+}
+```
+",SELECT DISTINCT ?n WHERE { <http://dbpedia.org/resource/Chiemsee> <http://dbpedia.org/ontology/maximumDepth> ?n },145.77938199043274,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?depth
+WHERE {
+  ?lake dbo:name ""Lake Chiemsee"" .
+  ?lake dbp:depth ?depth .
+}",True,True,4.777946850498661e-155,0.16666666666666666
+212,Which companies work in the aerospace industry as well as in medicine?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which companies work in the aerospace industry as well as in medicine?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?company
+WHERE {
+  ?company dbo:industry ""Aerospace"" .
+  ?company dbo:industry ""Medicine"" .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { ?uri a dbo:Company ; dbo:industry dbr:Aerospace ; dbo:industry dbr:Medical },145.03601360321045,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?company
+WHERE {
+  ?company dbo:industry ""Aerospace"" .
+  ?company dbo:industry ""Medicine"" .
+}",True,True,0.3849884217715086,0.34375
+96,Which professional surfers were born on the Philippines?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which professional surfers were born on the Philippines?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?surfer
+WHERE {
+  ?surfer dbo:birthPlace dbp:Philippines .
+  ?surfer dbo:profession ""Surfer"" .
+}
+```
+",PREFIX dbr: <http://dbpedia.org/resource/> PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { ?uri dbo:occupation dbr:Surfer ; dbo:birthPlace res:Philippines },153.44825339317322,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?surfer
+WHERE {
+  ?surfer dbo:birthPlace dbp:Philippines .
+  ?surfer dbo:profession ""Surfer"" .
+}",True,True,0.162895474896813,0.27272727272727276
+40,Who were the parents of Queen Victoria?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who were the parents of Queen Victoria?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?father ?mother
+WHERE {
+  <http://dbpedia.org/resource/Queen_Victoria> dbo:father ?father .
+  <http://dbpedia.org/resource/Queen_Victoria> dbo:mother ?mother .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { res:Queen_Victoria dbo:parent ?uri },189.4714527130127,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?father ?mother
+WHERE {
+  <http://dbpedia.org/resource/Queen_Victoria> dbo:father ?father .
+  <http://dbpedia.org/resource/Queen_Victoria> dbo:mother ?mother .
+}",True,True,0.1531682455208201,0.25
+79,Are there any castles in the United States?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Are there any castles in the United States?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?castle
+WHERE {
+  ?castle dbo:type dbo:Castle .
+  ?castle dbp:country ""United States"" .
+}
+```
+",PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> ASK WHERE { ?uri dct:subject dbc:Castles_in_the_United_States },142.85599827766418,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?castle
+WHERE {
+  ?castle dbo:type dbo:Castle .
+  ?castle dbp:country ""United States"" .
+}",True,True,5.052063697963686e-155,0.14285714285714288
+141,Which languages are spoken in Estonia?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which languages are spoken in Estonia?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?language
+WHERE {
+  ?country dbo:officialLanguage ?language .
+  FILTER ( ?country = <http://dbpedia.org/resource/Estonia> )
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/ontology/spokenIn> <http://dbpedia.org/resource/Estonia> },161.6496386528015,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?language
+WHERE {
+  ?country dbo:officialLanguage ?language .
+  FILTER ( ?country = <http://dbpedia.org/resource/Estonia> )
+}",True,True,5.9883480390466785e-155,0.22222222222222218
+80,Give me a list of all critically endangered birds.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me a list of all critically endangered birds.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?bird
+WHERE {
+  ?bird dbo:species ?species .
+  ?species dbo:conservationStatus ""Critically Endangered"" .
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri ?p WHERE { ?uri rdf:type dbo:Bird { ?uri dbo:conservationStatus ""CR"" } UNION { ?uri dct:subject dbc:Critically_endangered_animals } }",149.65809440612793,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?bird
+WHERE {
+  ?bird dbo:species ?species .
+  ?species dbo:conservationStatus ""Critically Endangered"" .
+}",True,True,0.09173031302402399,0.225
+159,Which countries are connected by the Rhine?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which countries are connected by the Rhine?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:locatedIn ?river .
+  ?river dbo:name ""Rhine"" .
+}
+```
+",PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dbp: <http://dbpedia.org/property/> PREFIX dbo: <http://dbpedia.org/ontology/> SELECT DISTINCT ?uri WHERE { {<http://dbpedia.org/resource/Rhine> dbo:country ?uri } UNION {dbr:Rhine dbp:country ?uri} },147.283607006073,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country
+WHERE {
+  ?country dbo:locatedIn ?river .
+  ?river dbo:name ""Rhine"" .
+}",True,True,3.3723079057200692e-78,0.27027027027027023
+107,Who was the father of Queen Elizabeth II?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who was the father of Queen Elizabeth II?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?father
+WHERE {
+  ?queen dbo:father ?father .
+  FILTER ( ?queen = <http://dbpedia.org/resource/Elizabeth_II> )
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT * WHERE { res:Elizabeth_II dbo:parent ?uri . ?uri <http://xmlns.com/foaf/0.1/gender> ""male""@en }",163.5137076377869,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?father
+WHERE {
+  ?queen dbo:father ?father .
+  FILTER ( ?queen = <http://dbpedia.org/resource/Elizabeth_II> )
+}",True,True,0.14962848372546667,0.22857142857142856
+163,Give me all chemical elements.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all chemical elements.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?element
+WHERE {
+  ?element dbo:chemicalElement ?element .
+}
+```
+",PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> SELECT DISTINCT ?uri WHERE { ?uri rdf:type owl:Thing ; dct:subject dbc:Chemical_elements },121.0207724571228,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?element
+WHERE {
+  ?element dbo:chemicalElement ?element .
+}",True,True,4.446355400640792e-155,0.18181818181818185
+211,Give me all American presidents of the last 20 years.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all American presidents of the last 20 years.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?president ?termStart ?termEnd
+WHERE {
+  ?president dbo: nationality ""American"" .
+  ?president dbo:birthDate ?birthDate .
+  ?president dbo:termStart ?termStart .
+  ?president dbo:termEnd ?termEnd .
+  FILTER (YEAR(?termStart) >= 2003)
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbp: <http://dbpedia.org/property/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri WHERE { ?uri rdf:type dbo:Person ; dct:subject dbc:Presidents_of_the_United_States ; dbo:activeYearsEndDate ?termEnd FILTER ( ( year(now()) - year(?termEnd) ) <= 20 ) },239.20740962028503,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?president ?termStart ?termEnd
+WHERE {
+  ?president dbo: nationality ""American"" .
+  ?president dbo:birthDate ?birthDate .
+  ?president dbo:termStart ?termStart .
+  ?president dbo:termEnd ?termEnd .
+  FILTER (YEAR(?termStart) >= 2003)
+}",False,False,0.14883698737937445,0.21428571428571427
+51,When is the movie Worst Case Scenario going to be in cinemas in the Netherlands?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When is the movie Worst Case Scenario going to be in cinemas in the Netherlands?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?releaseDate
+WHERE {
+  ?movie dbo:title ""Worst Case Scenario"" .
+  ?movie dbo:country ""Netherlands"" .
+  ?movie dbo:releaseDate ?releaseDate .
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX foaf: <http://xmlns.com/foaf/0.1/> SELECT DISTINCT ?rel WHERE { <http://dbpedia.org/resource/Worst_Case_Scenario_(film)> ?p ?o ; dbo:releaseDate ?rel FILTER contains(lcase(str(?o)), ""netherlands"") }",230.29487991333008,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?releaseDate
+WHERE {
+  ?movie dbo:title ""Worst Case Scenario"" .
+  ?movie dbo:country ""Netherlands"" .
+  ?movie dbo:releaseDate ?releaseDate .
+}",True,True,0.1348135718388515,0.21739130434782608
+144,Whom did Lance Bass marry?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Whom did Lance Bass marry?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  <http://dbpedia.org/resource/Lance_Bass> dbo:spouse ?spouse .
+}
+```
+",SELECT DISTINCT ?uri WHERE { {<http://dbpedia.org/resource/Lance_Bass> dbo:spouse ?uri} UNION {?uri dbo:spouse <http://dbpedia.org/resource/Lance_Bass>} },142.08382415771484,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  <http://dbpedia.org/resource/Lance_Bass> dbo:spouse ?spouse .
+}",True,True,5.859491021246916e-155,0.2
+167,Which subsidiary of TUI Travel serves both Glasgow and Dublin?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which subsidiary of TUI Travel serves both Glasgow and Dublin?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?subsidiary
+WHERE {
+  ?subsidiary dbo:parentOrganization <http://dbpedia.org/resource/TUI_Travel> .
+  ?subsidiary dbo:serves ?city .
+  FILTER (regex(?city, ""Glasgow"", ""i"") || regex(?city, ""Dublin"", ""i""))
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/TUI_Travel> <http://dbpedia.org/ontology/subsidiary> ?uri . ?uri <http://dbpedia.org/ontology/targetAirport> <http://dbpedia.org/resource/Glasgow_International_Airport> ; <http://dbpedia.org/ontology/targetAirport> <http://dbpedia.org/resource/Dublin_Airport> },283.54930901527405,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?subsidiary
+WHERE {
+  ?subsidiary dbo:parentOrganization <http://dbpedia.org/resource/TUI_Travel> .
+  ?subsidiary dbo:serves ?city .
+  FILTER (regex(?city, ""Glasgow"", ""i"") || regex(?city, ""Dublin"", ""i""))
+}",True,True,4.298631483271809e-155,0.15789473684210525
+131,What languages are spoken in Pakistan?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What languages are spoken in Pakistan?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?language
+WHERE {
+  ?country dbo:name ""Pakistan"" .
+  ?country dbp:officialLanguage ?language .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Pakistan> <http://dbpedia.org/ontology/language> ?uri },146.66387152671814,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?language
+WHERE {
+  ?country dbo:name ""Pakistan"" .
+  ?country dbp:officialLanguage ?language .
+}",True,True,6.00795009506529e-155,0.20833333333333334
+120,Who is the daughter of Bill Clinton married to?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the daughter of Bill Clinton married to?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  ?person dbo:spouse ?spouse .
+  ?person dbo:father ?billClinton .
+  ?billClinton dbo:name ""Bill Clinton"" .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dbp: <http://dbpedia.org/property/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { dbr:Bill_Clinton dbo:child ?child . ?child dbo:spouse ?uri . ?uri rdfs:label ?string },167.99817276000977,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?spouse
+WHERE {
+  ?person dbo:spouse ?spouse .
+  ?person dbo:father ?billClinton .
+  ?billClinton dbo:name ""Bill Clinton"" .
+}",True,True,0.14131253393059537,0.275
+164,Who was on the Apollo 11 mission?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who was on the Apollo 11 mission?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?astronaut
+WHERE {
+  ?astronaut dbo:birthPlace ?place .
+  ?astronaut dbo:mission dbp:Apollo_11 .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Apollo_11> <http://dbpedia.org/property/crewMembers> ?uri },158.9153552055359,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?astronaut
+WHERE {
+  ?astronaut dbo:birthPlace ?place .
+  ?astronaut dbo:mission dbp:Apollo_11 .
+}",True,True,6.00795009506529e-155,0.20833333333333334
+88,What is the wavelength of Indigo?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the wavelength of Indigo?
+```sparql
+PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?wavelength
+WHERE {
+  ?color dbpedia:wavelength ?wavelength .
+  FILTER (regex(?color, ""Indigo"", ""i""))
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT ?n WHERE { dbr:Indigo dbo:wavelength ?n },185.1638548374176,"PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?wavelength
+WHERE {
+  ?color dbpedia:wavelength ?wavelength .
+  FILTER (regex(?color, ""Indigo"", ""i""))
+}",True,True,6.709616501577743e-155,0.20689655172413793
+151,Give me all B-sides of the Ramones.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all B-sides of the Ramones.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?song
+WHERE {
+  ?song dbo:artist ?artist .
+  ?artist dbo:name ""Ramones"" .
+  ?song dbo:album ?album .
+  FILTER (regex(?album, ""B-side"", ""i""))
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?string WHERE { ?x dbo:musicalArtist res:Ramones ; dbo:bSide ?string },199.08069944381717,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?song
+WHERE {
+  ?song dbo:artist ?artist .
+  ?artist dbo:name ""Ramones"" .
+  ?song dbo:album ?album .
+  FILTER (regex(?album, ""B-side"", ""i""))
+}",True,True,0.22765893232556483,0.25
+63,Who was called Scarface?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who was called Scarface?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?subject WHERE {
+  ?subject dbo:name ""Scarface"" .
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> SELECT ?uri WHERE { ?uri dbo:alias ?alias FILTER contains(lcase(?alias), ""scarface"") }",117.86691212654114,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?subject WHERE {
+  ?subject dbo:name ""Scarface"" .
+}",True,True,3.6170146665513074e-78,0.2692307692307692
+27,Which rivers flow into the North Sea?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which rivers flow into the North Sea?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?river
+WHERE {
+  ?river dbo:wikiPageRedirects* dbo:River .
+  ?river dbp:mouth ?sea .
+  ?sea dbo:name ""North Sea"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/River> ; <http://dbpedia.org/ontology/riverMouth> <http://dbpedia.org/resource/North_Sea> },177.8823971748352,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?river
+WHERE {
+  ?river dbo:wikiPageRedirects* dbo:River .
+  ?river dbp:mouth ?sea .
+  ?sea dbo:name ""North Sea"" .
+}",True,True,5.359624986283916e-155,0.16666666666666666
+156,Where is Fort Knox located?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Where is Fort Knox located?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?location
+WHERE {
+  <http://dbpedia.org/resource/Fort_Knox> dbo:location ?location .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Fort_Knox> <http://dbpedia.org/ontology/location> ?uri. ?uri a <http://dbpedia.org/ontology/Place>. },140.99618911743164,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?location
+WHERE {
+  <http://dbpedia.org/resource/Fort_Knox> dbo:location ?location .
+}",True,True,3.00466076572634e-78,0.20833333333333331
+207,Which daughters of British earls died at the same place they were born at?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which daughters of British earls died at the same place they were born at?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?daughter ?birthPlace ?deathPlace
+WHERE {
+  ?daughter rdf:type dbo:Person .
+  ?daughter dbo:father ?father .
+  ?father dbo:title ?earlTitle .
+  FILTER (regex(?earlTitle, ""Earl of"", ""i""))
+  ?daughter dbo:birthDate ?birthPlace .
+  ?daughter dbo:deathPlace ?deathPlace .
+  FILTER (?birthPlace = ?deathPlace)
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX yago: <http://dbpedia.org/class/yago/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri WHERE { ?uri rdf:type yago:WikicatDaughtersOfBritishEarls ; dbo:birthPlace ?x ; dbo:deathPlace ?y FILTER ( ?x = ?y ) },350.8678641319275,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?daughter ?birthPlace ?deathPlace
+WHERE {
+  ?daughter rdf:type dbo:Person .
+  ?daughter dbo:father ?father .
+  ?father dbo:title ?earlTitle .
+  FILTER (regex(?earlTitle, ""Earl of"", ""i""))
+  ?daughter dbo:birthDate ?birthPlace .
+  ?daughter dbo:deathPlace ?deathPlace .
+  FILTER (?birthPlace = ?deathPlace)
+}",True,True,0.14879983094406998,0.25
+24,How many emperors did China have?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many emperors did China have?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT (COUNT(DISTINCT ?emperor)) AS ?count
+WHERE {
+  ?emperor dbo:country ?china .
+  ?emperor dbo:title ""Emperor"" .
+}
+```
+",SELECT COUNT(DISTINCT ?uri AS ?uri) WHERE { ?uri <http://dbpedia.org/property/title> <http://dbpedia.org/resource/Emperor_of_China> . },164.91160011291504,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT (COUNT(DISTINCT ?emperor)) AS ?count
+WHERE {
+  ?emperor dbo:country ?china .
+  ?emperor dbo:title ""Emperor"" .
+}",False,True,5.9883480390466785e-155,0.19999999999999998
+133,What are the names of the Teenage Mutant Ninja Turtles?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What are the names of the Teenage Mutant Ninja Turtles?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?name
+WHERE {
+  ?turtle dbo:name ?name .
+  FILTER (regex(?name, ""Teenage Mutant Ninja Turtle"", ""i""))
+}
+```
+",PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT DISTINCT ?s WHERE { <http://dbpedia.org/resource/Teenage_Mutant_Ninja_Turtles> <http://dbpedia.org/property/members> ?x . ?x foaf:givenName ?s },154.36502814292908,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?name
+WHERE {
+  ?turtle dbo:name ?name .
+  FILTER (regex(?name, ""Teenage Mutant Ninja Turtle"", ""i""))
+}",True,True,6.083683266869439e-155,0.20588235294117643
+103,Where does Piccadilly start?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Where does Piccadilly start?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?location
+WHERE {
+  ?location dbo:location ?street .
+  FILTER (regex(?street, ""Piccadilly"", ""i""))
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/ontology/routeStart> <http://dbpedia.org/resource/Piccadilly> },147.22606945037842,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?location
+WHERE {
+  ?location dbo:location ?street .
+  FILTER (regex(?street, ""Piccadilly"", ""i""))
+}",True,True,4.905470711005226e-155,0.15999999999999998
+165,What is the name of the university where Obama's wife studied?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the name of the university where Obama's wife studied?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?universityName
+WHERE {
+  ?person dbo:spouse ?obama .
+  ?obama dbo:spouse ?michelleObama .
+  ?michelleObama dbo:education ?university .
+  ?university dbo:name ?universityName .
+}
+```
+",SELECT DISTINCT ?s WHERE { <http://dbpedia.org/resource/Barack_Obama> <http://dbpedia.org/ontology/spouse> ?x . ?x <http://dbpedia.org/ontology/almaMater> ?s },189.8968231678009,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?universityName
+WHERE {
+  ?person dbo:spouse ?obama .
+  ?obama dbo:spouse ?michelleObama .
+  ?michelleObama dbo:education ?university .
+  ?university dbo:name ?universityName .
+}",True,True,4.3334165612319825e-155,0.1724137931034483
+108,When did Paraguay proclaim its independence?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When did Paraguay proclaim its independence?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  ?country dbo:countryOf ?location .
+  ?location dbp:officialName ""Paraguay"" .
+  ?country dbo:independenceDay ?date .
+}
+```
+",SELECT DISTINCT ?date WHERE { <http://dbpedia.org/resource/Paraguay> <http://dbpedia.org/ontology/foundingDate> ?date },167.76623582839966,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  ?country dbo:countryOf ?location .
+  ?location dbp:officialName ""Paraguay"" .
+  ?country dbo:independenceDay ?date .
+}",True,True,2.2389220137353796e-78,0.2
+15,How short is the shortest active NBA player?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How short is the shortest active NBA player?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?player ?height
+WHERE {
+  ?player rdf:type dbo:BasketballPlayer .
+  ?player dbo:active ?active .
+  ?active rdf:type dbo:Boolean .
+  ?player dbp:height ?height .
+  FILTER(?active = true)
+}
+ORDER BY DESC(?height)
+LIMIT 1
+```
+",SELECT DISTINCT ?n WHERE { ?x a <http://dbpedia.org/ontology/BasketballPlayer> ; <http://dbpedia.org/ontology/league> <http://dbpedia.org/resource/National_Basketball_Association> ; <http://dbpedia.org/ontology/height> ?n FILTER NOT EXISTS { ?x <http://dbpedia.org/ontology/activeYearsEndYear> ?d } } ORDER BY ASC(?n) OFFSET 0 LIMIT 1,295.2807965278625,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?player ?height
+WHERE {
+  ?player rdf:type dbo:BasketballPlayer .
+  ?player dbo:active ?active .
+  ?active rdf:type dbo:Boolean .
+  ?player dbp:height ?height .
+  FILTER(?active = true)
+}
+ORDER BY DESC(?height)
+LIMIT 1",True,True,1.8982837083468576e-78,0.15094339622641512
+45,Where did Abraham Lincoln die?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Where did Abraham Lincoln die?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?location
+WHERE {
+  <http://dbpedia.org/resource/Abraham_Lincoln> dbo:deathPlace ?location .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?uri WHERE { res:Abraham_Lincoln dbo:deathPlace ?uri },144.44586849212646,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?location
+WHERE {
+  <http://dbpedia.org/resource/Abraham_Lincoln> dbo:deathPlace ?location .
+}",True,True,0.1772712285241271,0.28571428571428575
+82,When was Jack Wolfskin founded?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When was Jack Wolfskin founded?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?founded WHERE {
+  <http://dbpedia.org/resource/Jack_Wolfskin> dbo:founded ?founded .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT xsd:date(?year) WHERE { res:Jack_Wolfskin dbo:foundingYear ?year },142.18279814720154,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?founded WHERE {
+  <http://dbpedia.org/resource/Jack_Wolfskin> dbo:founded ?founded .
+}",True,True,0.2102369368326755,0.2592592592592593
+9,In which city is the headquarter of Air China?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: In which city is the headquarter of Air China?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?city
+WHERE {
+  ?company dbo:headquarters ?city .
+  FILTER (regex(?company, ""Air China"", ""i""))
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Air_China> <http://dbpedia.org/ontology/headquarter> ?uri . ?uri a <http://dbpedia.org/class/yago/City108524735> },150.291823387146,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?city
+WHERE {
+  ?company dbo:headquarters ?city .
+  FILTER (regex(?company, ""Air China"", ""i""))
+}",True,True,5.052063697963686e-155,0.1724137931034483
+201,What is the founding year of the brewery that produces Pilsner Urquell?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the founding year of the brewery that produces Pilsner Urquell?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?foundingYear
+WHERE {
+  ?brewery dbo:brand ?beer .
+  ?beer rdfs:label ""Pilsner Urquell"" .
+  ?brewery dbo:foundingYear ?foundingYear .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> SELECT DISTINCT xsd:date(?num) WHERE { <http://dbpedia.org/resource/Pilsner_Urquell> <http://dbpedia.org/property/brewery> ?uri . ?uri dbo:foundingYear ?num },245.9071502685547,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?foundingYear
+WHERE {
+  ?brewery dbo:brand ?beer .
+  ?beer rdfs:label ""Pilsner Urquell"" .
+  ?brewery dbo:foundingYear ?foundingYear .
+}",True,True,2.418843491213685e-78,0.2571428571428572
+171,When did the Boston Tea Party take place?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When did the Boston Tea Party take place?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Boston_Tea_Party> dbo:date ?date .
+}
+```
+",SELECT DISTINCT ?d WHERE { <http://dbpedia.org/resource/Boston_Tea_Party> <http://dbpedia.org/property/date> ?d },146.46368837356567,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Boston_Tea_Party> dbo:date ?date .
+}",True,True,3.00466076572634e-78,0.2380952380952381
+182,Which animals are critically endangered?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which animals are critically endangered?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?animal
+WHERE {
+  ?animal dbr:species ?species .
+  ?species dbo:conservationStatus ""Critically Endangered"" .
+}
+```
+","SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Animal> ; <http://dbpedia.org/ontology/conservationStatus> ""CR"" }",151.83106541633606,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+SELECT DISTINCT ?animal
+WHERE {
+  ?animal dbr:species ?species .
+  ?species dbo:conservationStatus ""Critically Endangered"" .
+}",True,True,5.859491021246916e-155,0.17857142857142858
+13,Which politicians were married to a German?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which politicians were married to a German?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?politician ?spouse
+WHERE {
+  ?politician dbo:spouse ?spouse .
+  ?spouse dbo:nationality ""German"" .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Politician> ; <http://dbpedia.org/ontology/spouse> ?spouse { ?spouse <http://dbpedia.org/ontology/birthPlace> <http://dbpedia.org/resource/Germany> } UNION { ?spouse <http://dbpedia.org/ontology/birthPlace> ?p . ?p <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/Germany> } },146.66042113304138,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?politician ?spouse
+WHERE {
+  ?politician dbo:spouse ?spouse .
+  ?spouse dbo:nationality ""German"" .
+}",True,True,5.100278386789125e-155,0.21212121212121213
+114,How big is the earth's diameter?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How big is the earth's diameter?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+
+SELECT ?diameter
+WHERE {
+  ?earth dbo:diameter ?diameter .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT (( xsd:double(?radius) * 2 ) AS ?diameter) WHERE { res:Earth dbo:meanRadius ?radius },118.03225088119508,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+
+SELECT ?diameter
+WHERE {
+  ?earth dbo:diameter ?diameter .
+}",True,True,0.14092603317607083,0.2121212121212121
+92,Is the wife of President Obama called Michelle?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Is the wife of President Obama called Michelle?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?wife
+WHERE {
+  ?president dbo:spouse ?wife .
+  FILTER ( ?president = <http://dbpedia.org/resource/Barack_Obama> )
+}
+```
+","PREFIX res: <http://dbpedia.org/resource/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX onto: <http://dbpedia.org/ontology/> ASK WHERE { res:Barack_Obama onto:spouse ?spouse . ?spouse rdfs:label ?name FILTER regex(?name, ""Michelle"") }",165.36736226081848,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?wife
+WHERE {
+  ?president dbo:spouse ?wife .
+  FILTER ( ?president = <http://dbpedia.org/resource/Barack_Obama> )
+}",True,True,5.038149038220555e-155,0.18421052631578944
+194,Which U.S. state has the abbreviation MN?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which U.S. state has the abbreviation MN?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?stateLabel WHERE {
+  ?state dbo:abbreviation ""MN"" .
+  ?state dbo:country dbo:UnitedStates .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}
+```
+","SELECT DISTINCT ?uri WHERE { ?uri a yago:WikicatStatesOfTheUnitedStates ; <http://dbpedia.org/property/postalabbreviation> ""MN""^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#langString> }",194.60438418388367,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?stateLabel WHERE {
+  ?state dbo:abbreviation ""MN"" .
+  ?state dbo:country dbo:UnitedStates .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}",False,False,4.177908019702813e-155,0.125
+175,When did Muhammad die?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When did Muhammad die?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?deathYear
+WHERE {
+  <http://dbpedia.org/resource/Muhammad> dbo:deathDate ?deathYear .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT xsd:date(?date) WHERE { res:Muhammad dbo:deathDate ?date },144.61276245117188,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?deathYear
+WHERE {
+  <http://dbpedia.org/resource/Muhammad> dbo:deathDate ?deathYear .
+}",True,True,0.21651956746181059,0.29629629629629634
+26,What is the atmosphere of the Moon composed of?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the atmosphere of the Moon composed of?
+```sparql
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+SELECT ?composition
+WHERE {
+  ?moon dbo:atmosphere ?composition .
+  FILTER (regex(?composition, ""Moon"", ""i""))
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Moon> <http://dbpedia.org/property/atmosphereComposition> ?uri },147.66722297668457,"PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+SELECT ?composition
+WHERE {
+  ?moon dbo:atmosphere ?composition .
+  FILTER (regex(?composition, ""Moon"", ""i""))
+}",True,True,4.905470711005226e-155,0.15999999999999998
+60,Who is the governor of Texas?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the governor of Texas?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?person WHERE {
+  ?person dbo:country ""United States""^^xsd:string .
+  ?person dbo:state ""Texas""^^xsd:string .
+  ?person dbo:officialTitle ""Governor""^^xsd:string .
+}
+```
+",PREFIX res: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT DISTINCT ?string WHERE { res:Texas dbp:governor ?string },193.0472593307495,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?person WHERE {
+  ?person dbo:country ""United States""^^xsd:string .
+  ?person dbo:state ""Texas""^^xsd:string .
+  ?person dbo:officialTitle ""Governor""^^xsd:string .
+}",True,True,0.12586347848916266,0.22580645161290322
+110,Which movies did Kurosawa direct?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which movies did Kurosawa direct?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT ?movie
+WHERE {
+  dbr:Akira_Kurosawa dbo:directed ?movie .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?uri WHERE { ?uri rdf:type dbo:Film ; dbo:director res:Akira_Kurosawa },161.36626529693604,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT ?movie
+WHERE {
+  dbr:Akira_Kurosawa dbo:directed ?movie .
+}",True,True,0.16246736614250729,0.24242424242424243
+206,What was the name of the famous battle in 1836 in San Antonio?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What was the name of the famous battle in 1836 in San Antonio?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?battleName
+WHERE {
+  ?battle dbo:battleLocation ?location .
+  ?location dbo:name ""San Antonio"" .
+  ?battle dbo:date ""1836""^^xsd:gYear .
+  ?battle dbo:name ?battleName .
+}
+```
+","PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbr: <http://dbpedia.org/resource/> SELECT ?uri WHERE { ?uri a dbo:MilitaryConflict ; dbo:place dbr:San_Antonio ; dbo:date ?date FILTER ( ?date > ""1835-12-31T00:00:00Z""^^xsd:dateTime ) FILTER ( ?date <= ""1836-12-31T00:00:00Z""^^xsd:dateTime ) }",259.36666226387024,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?battleName
+WHERE {
+  ?battle dbo:battleLocation ?location .
+  ?location dbo:name ""San Antonio"" .
+  ?battle dbo:date ""1836""^^xsd:gYear .
+  ?battle dbo:name ?battleName .
+}",True,True,0.09567839473656903,0.17777777777777778
+97,Give me the official websites of actors of the television show Charmed.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me the official websites of actors of the television show Charmed.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?actor ?actorWebsite
+WHERE {
+  ?actor dbo:birthPlace ""United States"" .
+  ?actor dbo:role ""Actor"" .
+  ?actor dbo:knownFor ?show .
+  ?show rdfs:label ""Charmed"" .
+  ?actor dbo:officialWebsite ?actorWebsite .
+}
+```
+",PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX onto: <http://dbpedia.org/ontology/> SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Charmed> onto:starring ?actors . ?actors foaf:homepage ?uri },284.7739448547363,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?actor ?actorWebsite
+WHERE {
+  ?actor dbo:birthPlace ""United States"" .
+  ?actor dbo:role ""Actor"" .
+  ?actor dbo:knownFor ?show .
+  ?show rdfs:label ""Charmed"" .
+  ?actor dbo:officialWebsite ?actorWebsite .
+}",True,True,2.187778499163197e-78,0.22222222222222224
+20,How many calories does a baguette have?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many calories does a baguette have?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?calories
+WHERE {
+  ?baguette dbo:calories ?calories .
+  FILTER (regex(?baguette, ""Baguette""))
+}
+```
+",SELECT DISTINCT ?n WHERE { <http://dbpedia.org/resource/Baguette> <http://dbpedia.org/property/calories> ?n },144.90263891220093,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?calories
+WHERE {
+  ?baguette dbo:calories ?calories .
+  FILTER (regex(?baguette, ""Baguette""))
+}",True,True,5.0437883815744365e-155,0.16666666666666666
+169,Give me all libraries established before 1400.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all libraries established before 1400.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?library ?name
+WHERE {
+  ?library dbo:type dbo:Library .
+  ?library dbo:establishmentYear ?year .
+  FILTER(?year < 1400)
+  ?library dbp:name ?name .
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri a <http://dbpedia.org/ontology/Library> ; <http://dbpedia.org/property/established> ?year FILTER ( ?year < 1400 ) },193.17408537864685,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?library ?name
+WHERE {
+  ?library dbo:type dbo:Library .
+  ?library dbo:establishmentYear ?year .
+  FILTER(?year < 1400)
+  ?library dbp:name ?name .
+}",True,True,5.502673892122423e-155,0.18918918918918917
+38,Give me all Frisian islands that belong to the Netherlands.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me all Frisian islands that belong to the Netherlands.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?island
+WHERE {
+  ?island dbo:country ?country .
+  ?country dbo:name ""Netherlands"" .
+  ?island dbo:type dbo:Island .
+  ?island dbo:name ?name .
+  FILTER (LANG(?name) = ""nl"")
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX yago: <http://dbpedia.org/class/yago/> PREFIX res: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri WHERE { ?uri rdf:type yago:WikicatFrisianIslands ; dbo:country res:Netherlands },264.0844371318817,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?island
+WHERE {
+  ?island dbo:country ?country .
+  ?country dbo:name ""Netherlands"" .
+  ?island dbo:type dbo:Island .
+  ?island dbo:name ?name .
+  FILTER (LANG(?name) = ""nl"")
+}",True,True,0.09672649511413096,0.19999999999999998
+192,Which museum exhibits The Scream by Munch?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which museum exhibits The Scream by Munch?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?museum
+WHERE {
+  ?artwork rdf:type dbo:Painting ;
+         dbp:artist ?artist ;
+         dbp:title ""The Scream"" .
+  ?artist dbo:birthPlace ?birthPlace .
+  ?museum dbo:collection ?artwork .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { res:The_Scream dbo:museum ?uri },267.1608929634094,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?museum
+WHERE {
+  ?artwork rdf:type dbo:Painting ;
+         dbp:artist ?artist ;
+         dbp:title ""The Scream"" .
+  ?artist dbo:birthPlace ?birthPlace .
+  ?museum dbo:collection ?artwork .
+}",True,True,0.08984797156831857,0.18421052631578946
+78,When was the De Beers company founded?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When was the De Beers company founded?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?founded WHERE {
+  <http://dbpedia.org/resource/De_Beers> dbo:founded ?founded .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT xsd:date(?date) WHERE { res:De_Beers dbo:foundingYear ?date },140.87792491912842,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?founded WHERE {
+  <http://dbpedia.org/resource/De_Beers> dbo:founded ?founded .
+}",True,True,0.2102369368326755,0.2592592592592593
+19,Who became president after JFK died?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who became president after JFK died?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?successor
+WHERE {
+  ?president dbo:birthDate ""1917-05-29""^^xsd:date .
+  ?president dbo:deathDate ""1963-11-22""^^xsd:date .
+  ?president dbo:successor ?successor .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/John_F._Kennedy> <http://dbpedia.org/property/presidentEnd> ?x . ?uri <http://dbpedia.org/property/presidentStart> ?x; a <http://dbpedia.org/ontology/Person>. },215.5913429260254,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?successor
+WHERE {
+  ?president dbo:birthDate ""1917-05-29""^^xsd:date .
+  ?president dbo:deathDate ""1963-11-22""^^xsd:date .
+  ?president dbo:successor ?successor .
+}",True,True,4.7030228367359436e-155,0.16129032258064516
+190,Who are the parents of the wife of Juan Carlos I?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who are the parents of the wife of Juan Carlos I?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?parent
+WHERE {
+  ?wife dbo:spouse JuanCarlosI .
+  ?wife dbo:father ?parent .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { res:Juan_Carlos_I_of_Spain dbo:spouse ?x . ?x dbo:parent ?uri },203.7189512252808,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?parent
+WHERE {
+  ?wife dbo:spouse JuanCarlosI .
+  ?wife dbo:father ?parent .
+}",False,False,0.15083364266523736,0.29411764705882354
+174,Who is the novelist of the work a song of ice and fire?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the novelist of the work a song of ice and fire?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?author
+WHERE {
+  ?work dbo:author ?author .
+  ?work dbo:title ""A Song of Ice and Fire"" .
+}
+```
+",PREFIX dbr: <http://dbpedia.org/resource/> PREFIX dbp: <http://dbpedia.org/property/> SELECT ?Novelist WHERE { dbr:A_Song_of_Ice_and_Fire dbp:author ?Novelist },148.10151648521423,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?author
+WHERE {
+  ?work dbo:author ?author .
+  ?work dbo:title ""A Song of Ice and Fire"" .
+}",True,True,0.12586347848916266,0.21875
+189,In which studio did the Beatles record their first album?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: In which studio did the Beatles record their first album?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?studio
+WHERE {
+  ?album dbo:recordingStudio ?studio .
+  ?album rdfs:label ""Please Please Me"" .
+  ?album dbo:artist ?artist .
+  ?artist dbo:name ""The Beatles"" .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbp: <http://dbpedia.org/property/> PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX db: <http://dbpedia.org/> SELECT ?studio WHERE { ?album dbo:artist dbr:The_Beatles ; rdf:type dbo:Album ; dbo:releaseDate ?date ; dbp:studio ?studio } ORDER BY ASC(?date) LIMIT 1,246.23450684547424,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?studio
+WHERE {
+  ?album dbo:recordingStudio ?studio .
+  ?album rdfs:label ""Please Please Me"" .
+  ?album dbo:artist ?artist .
+  ?artist dbo:name ""The Beatles"" .
+}",True,True,0.26855715021922133,0.25
+152,Which beer brewing companies are located in North-Rhine Westphalia?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which beer brewing companies are located in North-Rhine Westphalia?
+```sparql
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT ?company
+WHERE {
+  ?company dbo:location dbr:North_Rhine_Westphalia .
+  ?company dbo:type dbo:Brewery
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?company WHERE { ?company dct:subject dbc:Companies_based_in_North_Rhine-Westphalia ; rdf:type dbo:Brewery },189.49517393112183,"PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT ?company
+WHERE {
+  ?company dbo:location dbr:North_Rhine_Westphalia .
+  ?company dbo:type dbo:Brewery
+}",True,True,0.23768143833758423,0.24324324324324326
+94,When did princess Diana die?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: When did princess Diana die?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Diana,_Princess_of_Wales> dbo:deathDate ?date .
+}
+```
+","SELECT DISTINCT xsd:date(?d) WHERE { <http://dbpedia.org/resource/Diana,_Princess_of_Wales> <http://dbpedia.org/ontology/deathDate> ?d }",150.2186255455017,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?date
+WHERE {
+  <http://dbpedia.org/resource/Diana,_Princess_of_Wales> dbo:deathDate ?date .
+}",True,True,3.00466076572634e-78,0.2272727272727273
+8,Who founded Intel?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who founded Intel?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?founder
+WHERE {
+  ?company dbo:foundedBy ?founder .
+  FILTER ( ?company = <http://dbpedia.org/resource/Intel> )
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Intel> <http://dbpedia.org/property/founders> ?uri },157.5039598941803,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?founder
+WHERE {
+  ?company dbo:foundedBy ?founder .
+  FILTER ( ?company = <http://dbpedia.org/resource/Intel> )
+}",True,True,4.927224994977926e-155,0.1923076923076923
+95,Who is the youngest player in the Premier League?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who is the youngest player in the Premier League?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?player ?age
+WHERE {
+  ?player dbo:birthDate ?birthDate.
+  ?player dbo:position ""Footballer"".
+  ?player dbo:playsFor ?team.
+  ?team dbo:league ""Premier League"".
+  ?birthDate rdfs:label ?age.
+}
+ORDER BY DESC(?age)
+LIMIT 1
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX res: <http://dbpedia.org/resource/> SELECT DISTINCT ?uri WHERE { ?uri dbo:team ?team . ?league dbo:league res:Premier_League . ?league dbo:team ?team . ?uri dbo:birthDate ?date } ORDER BY DESC(?date) LIMIT 1,289.5096414089203,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?player ?age
+WHERE {
+  ?player dbo:birthDate ?birthDate.
+  ?player dbo:position ""Footballer"".
+  ?player dbo:playsFor ?team.
+  ?team dbo:league ""Premier League"".
+  ?birthDate rdfs:label ?age.
+}
+ORDER BY DESC(?age)
+LIMIT 1",True,True,0.12217624912667482,0.2545454545454545
+119,Which instruments does Cat Stevens play?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which instruments does Cat Stevens play?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?instrument
+WHERE {
+  ?musician dbo:name ""Cat Stevens"" .
+  ?musician dbo:playsInstrument ?instrument .
+}
+```
+",SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Cat_Stevens> <http://dbpedia.org/ontology/instrument> ?uri },143.5520372390747,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?instrument
+WHERE {
+  ?musician dbo:name ""Cat Stevens"" .
+  ?musician dbo:playsInstrument ?instrument .
+}",True,True,5.859491021246916e-155,0.2
+115,How many rivers and lakes are in South Carolina?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many rivers and lakes are in South Carolina?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?riverCount ?lakeCount
+WHERE {
+  ?river dbo:country ""South Carolina"" .
+  ?lake dbo:country ""South Carolina"" .
+  
+  BIND(COUNT(DISTINCT ?river) AS ?riverCount)
+  BIND(COUNT(DISTINCT ?lake) AS ?lakeCount)
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX dbr: <http://dbpedia.org/resource/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT (COUNT(DISTINCT ?uri) AS ?count) WHERE { { ?uri dbo:location dbr:South_Carolina ; rdf:type dbo:Lake } UNION { ?uri dct:subject dbc:Rivers_and_streams_of_South_Carolina } },277.0323233604431,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?riverCount ?lakeCount
+WHERE {
+  ?river dbo:country ""South Carolina"" .
+  ?lake dbo:country ""South Carolina"" .
+  
+  BIND(COUNT(DISTINCT ?river) AS ?riverCount)
+  BIND(COUNT(DISTINCT ?lake) AS ?lakeCount)
+}",True,False,0.08415773232636646,0.15094339622641512
+116,Who was called Rodzilla?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Who was called Rodzilla?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?subject WHERE {
+  ?subject dbo:nickname ""Rodzilla"" .
+}
+```
+","SELECT DISTINCT ?uri WHERE { ?uri <http://xmlns.com/foaf/0.1/nick> ""Rodzilla""@en }",117.91696906089784,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?subject WHERE {
+  ?subject dbo:nickname ""Rodzilla"" .
+}",True,True,5.541564466373977e-155,0.1904761904761905
+138,Give me the capitals of all countries in Africa.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me the capitals of all countries in Africa.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country ?capital
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbo:capital ?capital .
+  FILTER (regex(?countryName, ""Africa"", ""i""))
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX dct: <http://purl.org/dc/terms/> SELECT DISTINCT ?uri WHERE { ?country dct:subject dbc:Countries_in_Africa ; dbo:capital ?uri },175.06304049491882,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?country ?capital
+WHERE {
+  ?country dbo:country ?countryName .
+  ?country dbo:capital ?capital .
+  FILTER (regex(?countryName, ""Africa"", ""i""))
+}",True,True,0.15980518115118314,0.2631578947368421
+177,Which bridges are of the same type as the Manhattan Bridge?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which bridges are of the same type as the Manhattan Bridge?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?bridge
+WHERE {
+  ?bridge dbo:bridgeType ?bridgeType .
+  <http://dbpedia.org/resource/Manhattan_Bridge> dbo:bridgeType ?bridgeType .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX dbr: <http://dbpedia.org/resource/> SELECT DISTINCT ?bridge WHERE { dbr:Manhattan_Bridge dbo:type ?type . ?bridge dbo:type ?type ; rdf:type dbo:Bridge },171.02986073493958,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?bridge
+WHERE {
+  ?bridge dbo:bridgeType ?bridgeType .
+  <http://dbpedia.org/resource/Manhattan_Bridge> dbo:bridgeType ?bridgeType .
+}",True,True,0.2512712267295304,0.28571428571428575
+101,How many companies were founded by the founder of Facebook?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: How many companies were founded by the founder of Facebook?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(?company) AS ?count)
+WHERE {
+  ?founder dbo:founderOf ?company .
+  ?founder dbo:name ""Mark Zuckerberg"" .
+}
+```
+",SELECT (COUNT(DISTINCT ?x) AS ?c) WHERE { <http://dbpedia.org/resource/Facebook> <http://dbpedia.org/ontology/foundedBy> ?uri . ?x <http://dbpedia.org/ontology/foundedBy> ?uri },224.36568903923035,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(?company) AS ?count)
+WHERE {
+  ?founder dbo:founderOf ?company .
+  ?founder dbo:name ""Mark Zuckerberg"" .
+}",True,True,4.717068855239749e-155,0.17647058823529413
+14,Show me hiking trails in the Grand Canyon where there's no danger of flash floods.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Show me hiking trails in the Grand Canyon where there's no danger of flash floods.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?trail ?trailLabel
+WHERE {
+  ?trail dbo:location dbo:Grand_Canyon .
+  ?trail dbo:type dbo:Hiking_Trail .
+  ?trail dbo:danger ?danger .
+  FILTER ( ?danger != ""Flash_flood"" )
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}
+```
+",SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/property/trailheads> <http://dbpedia.org/resource/Grand_Canyon> FILTER NOT EXISTS { ?uri <http://dbpedia.org/property/hazards> <http://dbpedia.org/resource/Flash_flood> } },311.717924118042,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?trail ?trailLabel
+WHERE {
+  ?trail dbo:location dbo:Grand_Canyon .
+  ?trail dbo:type dbo:Hiking_Trail .
+  ?trail dbo:danger ?danger .
+  FILTER ( ?danger != ""Flash_flood"" )
+  SERVICE wikibase:label { bd:serviceParam wikibase:language ""[AUTO_LANGUAGE],en"". }
+}",False,False,5.188168399367444e-155,0.13636363636363635
+87,Which book has the most pages?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Which book has the most pages?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+
+SELECT ?book ?pages
+WHERE {
+  ?book dbo:numberOfPages ?pages .
+}
+GROUP BY ?book
+ORDER BY DESC(?pages)
+LIMIT 1
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT DISTINCT ?uri WHERE { ?uri rdf:type dbo:Book ; dbo:numberOfPages ?n } ORDER BY DESC(?n) OFFSET 0 LIMIT 1,155.73198914527893,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+
+SELECT ?book ?pages
+WHERE {
+  ?book dbo:numberOfPages ?pages .
+}
+GROUP BY ?book
+ORDER BY DESC(?pages)
+LIMIT 1",True,True,0.15084825228964133,0.28571428571428575
+148,What is the largest state in the United States?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What is the largest state in the United States?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state ?area
+WHERE {
+  ?state dbo:country dbo:UnitedStates .
+  ?state dbp:area ?area .
+}
+ORDER BY DESC(?area)
+LIMIT 1
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?uri WHERE { ?uri dct:subject dbc:States_of_the_United_States ; rdf:type dbo:AdministrativeRegion ; dbo:areaTotal ?area } ORDER BY DESC(?area) OFFSET 0 LIMIT 1,171.95679569244385,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?state ?area
+WHERE {
+  ?state dbo:country dbo:UnitedStates .
+  ?state dbp:area ?area .
+}
+ORDER BY DESC(?area)
+LIMIT 1",True,True,0.16924947351612715,0.27083333333333337
+43,Give me the websites of companies with more than 500000 employees.,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: Give me the websites of companies with more than 500000 employees.
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?company ?companyWebsite
+WHERE {
+  ?company dbo:employees ?employeeCount .
+  FILTER(?employeeCount > 500000)
+  ?company dbo:website ?companyWebsite .
+}
+```
+",PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT distinct ?web WHERE { ?sub dbo:numberOfEmployees ?obj . ?sub foaf:homepage ?web FILTER( xsd:integer(?obj) > 500000 ) . },179.65047597885132,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT ?company ?companyWebsite
+WHERE {
+  ?company dbo:employees ?employeeCount .
+  FILTER(?employeeCount > 500000)
+  ?company dbo:website ?companyWebsite .
+}",True,True,0.10652198953381814,0.20930232558139533
+179,What were the names of the three ships by Columbus?,google/gemma-2-9b-it,none,"Generate a SPARQL query for the input question for the DBpedia Knowledge Graph. Ensure that the query uses proper SPARQL syntax, includes prefixes, and retrieves unique results. Step-by-step: Identify relevant properties and structure the query accordingly.
+Output only the SPARQL query
+Question: What were the names of the three ships by Columbus?
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?shipName
+WHERE {
+  ?ship dbo:name ?shipName .
+  ?ship dbo:captain <http://dbpedia.org/resource/Christopher_Columbus> .
+}
+```
+",PREFIX dbo: <http://dbpedia.org/ontology/> PREFIX dct: <http://purl.org/dc/terms/> PREFIX dbc: <http://dbpedia.org/resource/Category:> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?uri WHERE { ?uri rdf:type dbo:Ship ; dct:subject dbc:Christopher_Columbus ; dct:subject dbc:Exploration_ships },170.85765480995178,"PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+SELECT DISTINCT ?shipName
+WHERE {
+  ?ship dbo:name ?shipName .
+  ?ship dbo:captain <http://dbpedia.org/resource/Christopher_Columbus> .
+}",True,True,0.11346982711167444,0.19444444444444442

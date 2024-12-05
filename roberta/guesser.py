@@ -1,5 +1,7 @@
 import random
 from abc import ABC
+from transformers import RobertaTokenizer, RobertaForSequenceClassification, Trainer, TrainingArguments
+import torch
 
 '''
 ===================================================
@@ -33,45 +35,9 @@ class Guesser(ABC):
         '''
         raise NotImplementedError("This function has not been implemented")
 
-    def train_model(self, *args, **kwargs):
+    def _load(self, path):
         '''
-        Trains the Guesser.
-
-        Args:
-            None (accepts anything as a catch-all to encompass various APIs).
-
-        Returns:
-            tuple: the guesser model
-        '''
-        pass
-
-    def eval_model(self, *args, **kwargs):
-        '''
-        Evaluates the Guesser.
-
-        Args:
-            None (accepts anything as a catch-all to encompass various APIs).
-
-        Returns:
-            dict of str -> float: a dictionary of evalaution statistics
-        '''
-        pass
-    
-    def save(self, path):
-        '''
-        Saves this Guesser model to disk.
-
-        Args:
-            path: the path to save the guesser model.
-
-        Returns:
-            tuple: the guesser model, and a path to its save location on disk
-        '''
-        pass
-
-    def load(self, path):
-        '''
-        Loads this Guesser model from disk.
+        Loads this Guesser model from disk. This is used internally to load ROBERTA, and is not used for non-ML models.
 
         Args:
             path: the path to the guesser model.
@@ -79,7 +45,7 @@ class Guesser(ABC):
         Returns:
             tuple: the guesser model, and a path to its save location on disk
         '''
-        pass
+        raise NotImplementedError
 
 '''
 ===================================================
@@ -113,20 +79,24 @@ class ROBERTA_Guesser(Guesser):
         Query should be the NLP query posed. Level should be the first level at which the LLM chain produced an **executable** or **correct** query (whether it was correct or not).
             - note -- do we want to say its the first level we got a correct query at? Using the Spider2SPARQL benchmark (https://arxiv.org/html/2309.16248v2) we know the right answers -- and we can just prompt up the chain until we get a correct one. I like that better, lets go with that.
             - but get data on both, so can choose to guess correct or guess executable.
-            - we should use the BLEU measure to say yes if the predicted query is X% correct compared tyo the ground truth query. For the exact percent, we should look at the dist, then choose the cuttoff from there. Matt has an implementation of BLEU in oldProject/.
+      from transformers import RobertaTokenizer, RobertaForSequenceClassification, Trainer, TrainingArguments
+      - we should use the BLEU measure to say yes if the predicted query is X% correct compared tyo the ground truth query. For the exact percent, we should look at the dist, then choose the cuttoff from there. Matt has an implementation of BLEU in oldProject/.
             - for useful examples, see: "validate_sparql_syntax(query)" and "check_query_execution(query, endpoint="https://dbpedia.org/sparql")" in oldProject/analysis.ipynb
 
     For ROBERTA, use reference: https://pytorch.org/hub/pytorch_fairseq_roberta/
     '''
     def __init__(self, min_level, max_level):
-        self.min_level = min_level
-        self.max_level = max_level
+        super().__init__(min_level, max_level)
+        self.roberta_model = self._load()
 
     def guess(self, nl_query):
-        return self.min_level
+        tokenised_query = self.tokenizer(nl_query, return_tensors='pt')
+        guess = self.model(**tokenised_query).logits
+        level_guess = int(torch.argmax(guess))
+        return level_guess
 
-    def train_model(self):
-        raise NotImplementedError("Not implemented")
-
-    def eval_model(self):
-        raise NotImplementedError("Not implemented")
+    def _load(self):
+        self.tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
+        self.model = RobertaForSequenceClassification.from_pretrained(
+            './output/results/checkpoint-400'
+        )
