@@ -162,4 +162,4 @@ cython_debug/
 #.idea/
 
 # ROBERTA stuff
-models/roberta/
+roberta/output/
