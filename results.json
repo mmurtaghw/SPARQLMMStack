@@ -1,0 +1,7 @@
+{
+    "level": 1,
+    "question": "What is the time zone of Salt Lake City?",
+    "generated_query": "PREFIX dbpedia: <http://dbpedia.org/ontology/>\nSELECT ?timeZone\nWHERE {\n  dbpedia:Salt_Lake_City dbpedia:timeZone ?timeZone .\n}",
+    "generation_time": 45.598281383514404,
+    "validation_time": 3.0653138160705566
+}
