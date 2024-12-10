@@ -1,8 +1,8 @@
 torch==2.5.0
 transformers==4.46.1
-accelerate==0.30.0.dev0
+accelerate
 pandas==2.1.1  
-rdflib==6.0.0
-SPARQLWrapper==2.0.0
+rdflib
+SPARQLWrapper
 nltk==3.8.1
 scikit-learn==1.3.0
