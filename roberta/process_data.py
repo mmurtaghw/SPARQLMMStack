@@ -27,12 +27,37 @@ def load_data():
         df = pd.read_csv(path)
         question_col = df["question"]
         runs_col = df["is_execution_valid"]
+
         bleu_col = df["bleu_score"].fillna(0)
-        hybrid_col = (runs_col * bleu_col)
         bleu_col_cuttoff = bleu_col > cuttoffs[key]
-        hybrid_col_cuttoff = hybrid_col > cuttoffs[key]
-        df_trunk = pd.DataFrame([question_col, runs_col, bleu_col_cuttoff, hybrid_col_cuttoff]).transpose()
-        df_trunk = df_trunk.set_axis(["question", "is_execution_valid", "bleu_col_cuttoff", "hybrid_col_cuttoff"], axis=1)
+        bleu_hybrid_col = (runs_col * bleu_col)
+        bleu_hybrid_cuttoff = bleu_hybrid_col > cuttoffs[key]
+
+        f1_col = df["macro_f1"].fillna(0)
+        f1_col_cuttoff = f1_col > cuttoffs[key] # TODO diff for f1 and bleu
+        f1_hybrid_col = (runs_col * f1_col)
+        f1_hybrid_cuttoff = f1_hybrid_col > cuttoffs[key]
+
+        df_trunk = pd.DataFrame(
+            [
+                question_col,
+                runs_col,
+                bleu_col_cuttoff,
+                bleu_hybrid_cuttoff,
+                f1_col_cuttoff,
+                f1_hybrid_cuttoff
+            ]
+        ).transpose()
+        df_trunk = df_trunk.set_axis(
+            [
+                "question",
+                "is_execution_valid",
+                "bleu_col_cuttoff",
+                "bleu_hybrid_col_cuttoff",
+                "f1_col_cuttoff",
+                "f1_hybrid_col_cuttoff"
+            ], axis=1
+        )
         dfs[key] = df_trunk
     return dfs
 
