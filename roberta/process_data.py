@@ -20,12 +20,48 @@ cuttoffs = {
 }
 models = [key for key in llm_stack]
 
+def print_data():
+    dfs = {}
+    for key in llm_stack:
+        path = os.path.join(data_path, llm_stack[key])
+        df = pd.read_csv(path)
+        question_col = df["question_id"]
+        runs_col = df["is_execution_valid"]
+        bleu_col = df["bleu_score"].fillna(0)
+        bleu_hybrid_col = (runs_col * bleu_col)
+        f1_col = df["macro_f1"].fillna(0)
+        f1_hybrid_col = (runs_col * f1_col)
+        dfs[key] = pd.DataFrame(
+            [
+                question_col,
+                runs_col,
+                bleu_col,
+                bleu_hybrid_col,
+                f1_col,
+                f1_hybrid_col
+            ]
+        )
+        dfs[key] = dfs[key].transpose().set_axis(
+            [
+                "question_col",
+                "runs_col",
+                "bleu_col",
+                "bleu_hybrid_col",
+                "f1_col",
+                "f1_hybrid_col"
+            ], axis=1
+        )
+    
+    for key in dfs:
+        print(key)
+        dfs[key].to_csv(f"{key}.temp.csv", header=True, index=False)
+
 def load_data():
     dfs = {}
     for key in llm_stack:
         path = os.path.join(data_path, llm_stack[key])
         df = pd.read_csv(path)
-        question_col = df["question"]
+        question_col = df["question_id"]
         runs_col = df["is_execution_valid"]
 
         bleu_col = df["bleu_score"].fillna(0)
@@ -88,8 +124,9 @@ def to_levels(dfs, metric):
     df_q_to_level.to_csv("temp.csv", index=False, header=False)
 
 def main():
-    dfs = load_data()
-    to_levels(dfs, "is_execution_valid")
+    print_data()
+    # dfs = load_data()
+    # to_levels(dfs, "is_execution_valid")
 
 if __name__ == '__main__':
     main()
