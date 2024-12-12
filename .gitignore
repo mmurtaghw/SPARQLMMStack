@@ -162,4 +162,5 @@ cython_debug/
 #.idea/
 
 # ROBERTA stuff
-roberta/output/
+*.safetensors
+*.pt
