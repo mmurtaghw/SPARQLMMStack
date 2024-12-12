@@ -112,17 +112,17 @@ def eval(model, tokenizer, test_dataset, save_path):
         labels_true.append(label_true)
         label_pred = int(infer(model, tokenizer, query))
         labels_pred.append(label_pred)
-
-    # output labels and convert to torch
     labels_true = torch.tensor(labels_true)
     labels_pred = torch.tensor(labels_pred)
-    print("True:", labels_true.tolist())
-    print("Pred:", labels_pred.tolist())
-    print("Equa:", [int(x) for x in (labels_true == labels_pred)])
 
-    # evaluation metrics
-    accuracy = torch.sum(labels_true == labels_pred) / len(test_queries)
-    print("Accuracy: ", round(float(accuracy)), 4)
+    with open(os.path.join(save_path, "eval.txt"), "w") as out:
+        print("True:", labels_true.tolist(), file=out)
+        print("Pred:", labels_pred.tolist(), file=out)
+        print("Equa:", [int(x) for x in (labels_true == labels_pred)], file=out)
+
+        # evaluation metrics
+        accuracy = torch.sum(labels_true == labels_pred) / len(test_queries)
+        print("Accuracy: ", round(float(accuracy), 4), file=out)
 
 def main(data_path, save_path):
     tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
