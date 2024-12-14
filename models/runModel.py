@@ -2,6 +2,9 @@ import time
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from accelerate import init_empty_weights, infer_auto_device_map
+import warnings
+warnings.filterwarnings("ignore", message="for model.*meta parameter.*")
+
 
 def load_model(model_name, quantization='none'):
     """
@@ -41,6 +44,7 @@ def load_model(model_name, quantization='none'):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     return model, tokenizer
 
+
 def generate_sparql(model, tokenizer, input_text):
     """
     Generate a SPARQL query from a given input prompt using the provided model and tokenizer.
@@ -57,6 +61,11 @@ def generate_sparql(model, tokenizer, input_text):
     inputs = tokenizer(input_text, return_tensors="pt").to("cuda")
     start_time = time.time()
     outputs = model.generate(
+        **inputs,
+        max_new_tokens=150,
+        temperature=0.2,  # Reduce randomness
+        top_p=0.9,        # Constrain output probabilities
+        pad_token_id=tokenizer.eos_token_id
     **inputs,
     max_new_tokens=150,
     temperature=0.2,  # Reduce randomness
@@ -66,6 +75,11 @@ def generate_sparql(model, tokenizer, input_text):
     end_time = time.time()
     print("Decoding output...")
     generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    # Remove the prompt from the output if included
+    if generated_text.startswith(input_text):
+        generated_text = generated_text[len(input_text):].strip()
+
     return generated_text, end_time - start_time
 
 
@@ -88,6 +102,13 @@ def validate_sparql(model, tokenizer, question, generated_query):
         f"Question: {question}\n"
         f"SPARQL Query: {generated_query}\n\n"
         "Does this SPARQL query correctly answer the question? "
+        "Carefully evaluate it based on the query's syntax and relevance to the question.\n\n"
+        "Respond with 'Yes' if the query is correct and meets the criteria, or 'No' otherwise."
+    )
+
+    # Tokenize input prompt
+    print("Tokenizing validation input...")
+    inputs = tokenizer(validation_prompt, return_tensors="pt").to("cuda")
         "Evaluate it based on the query's syntax and relevance to the question.\n\n"
         "Respond with 'Yes' if the query is correct and meets the criteria, or 'No' otherwise. "
     )
@@ -107,6 +128,20 @@ def validate_sparql(model, tokenizer, question, generated_query):
         pad_token_id=tokenizer.eos_token_id
     )
     end_time = time.time()
+
+    # Decode and extract only the response
+    print("Decoding validation output...")
+    generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+
+    # Extract only the validation response
+    if generated_text.startswith(validation_prompt):
+        generated_text = generated_text[len(validation_prompt):].strip()
+
+    print(f"Validation Response: {generated_text}")
+
+    # Parse response for "Yes" or "No"
+    is_correct = "yes" in generated_text.lower().split("\n")[0]  # Extract first meaningful line
+    return is_correct, end_time - start_time
     
     # Decode and extract only the response
     print("Decoding validation output...")
