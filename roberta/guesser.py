@@ -85,9 +85,9 @@ class ROBERTA_Guesser(Guesser):
 
     For ROBERTA, use reference: https://pytorch.org/hub/pytorch_fairseq_roberta/
     '''
-    def __init__(self, min_level, max_level):
+    def __init__(self, min_level, max_level, model_tag):
         super().__init__(min_level, max_level)
-        self.roberta_model = self._load()
+        self.roberta_model = self._load(model_tag)
 
     def guess(self, nl_query):
         tokenised_query = self.tokenizer(nl_query, return_tensors='pt')
@@ -95,8 +95,8 @@ class ROBERTA_Guesser(Guesser):
         level_guess = int(torch.argmax(guess))
         return level_guess
 
-    def _load(self):
+    def _load(self, model_tag):
         self.tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
         self.model = RobertaForSequenceClassification.from_pretrained(
-            './output/results/checkpoint-400'
+            f'./output/{model_tag}/results/checkpoint-400/'
         )

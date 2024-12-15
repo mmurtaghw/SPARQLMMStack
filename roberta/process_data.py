@@ -5,28 +5,56 @@ from sklearn.model_selection import train_test_split
 
 # constants
 data_path = "data/raw/"
-llm_stack = { # dictionaries preserve order!
-    ("qwen0.5b"): "processed_qald_9_experiment_report_qwen0.5b_none (1).csv",
-    ("qwen1.5b"): "processed_qald_9_experiment_report_qwen1.5b_none.csv",
-    ("mistral7b"): "processed_qald_9_experiment_report_mistral7b_none.csv",
-    ("Gemma2b"): "processed_qald_9_experiment_report_Gemma2b_none.csv",
-    ("Gemma9b"): "processed_qald_9_experiment_report_Gemma9b_none (1).csv"
-}
-bleu_cuttoffs = {
-    ("qwen0.5b"): 0.01,
-    ("qwen1.5b"): 0.01,
-    ("mistral7b"): 0.01,
-    ("Gemma2b"): 0.01,
-    ("Gemma9b"): 0.01
-}
-f1_cuttoffs = { # one st dev below the mean
-    ("qwen0.5b"): 0.09445996094,
-    ("qwen1.5b"): 0.1233251932,
-    ("mistral7b"): 0.1261542371,
-    ("Gemma2b"): 0.1337644674,
-    ("Gemma9b"): 0.1605610769
-}
-models = [key for key in llm_stack]
+def load_qald_9_data():
+    global llm_stack, bleu_cuttoffs, f1_cuttoffs, models
+    llm_stack = { # dictionaries preserve order!
+        ("qwen0.5b"): "processed_qald_9_experiment_report_qwen0.5b_none (1).csv",
+        ("qwen1.5b"): "processed_qald_9_experiment_report_qwen1.5b_none.csv",
+        ("mistral7b"): "processed_qald_9_experiment_report_mistral7b_none.csv",
+        ("Gemma2b"): "processed_qald_9_experiment_report_Gemma2b_none.csv",
+        ("Gemma9b"): "processed_qald_9_experiment_report_Gemma9b_none (1).csv"
+    }
+    bleu_cuttoffs = {
+        ("qwen0.5b"): 0.01,
+        ("qwen1.5b"): 0.01,
+        ("mistral7b"): 0.01,
+        ("Gemma2b"): 0.01,
+        ("Gemma9b"): 0.01
+    }
+    f1_cuttoffs = { # one st dev below the mean
+        ("qwen0.5b"): 0.09445996094,
+        ("qwen1.5b"): 0.1233251932,
+        ("mistral7b"): 0.1261542371,
+        ("Gemma2b"): 0.1337644674,
+        ("Gemma9b"): 0.1605610769
+    }
+    models = [key for key in llm_stack]
+
+def load_quanda_data():
+    raise NotImplementedError
+    global llm_stack, bleu_cuttoffs, f1_cuttoffs, models
+    llm_stack = { # dictionaries preserve order!
+        ("qwen0.5b"): "",
+        ("qwen1.5b"): "",
+        ("mistral7b"): "",
+        ("Gemma2b"): "",
+        ("Gemma9b"): ""
+    }
+    bleu_cuttoffs = {
+        ("qwen0.5b"): 0.00,
+        ("qwen1.5b"): 0.00,
+        ("mistral7b"): 0.00,
+        ("Gemma2b"): 0.00,
+        ("Gemma9b"): 0.00
+    }
+    f1_cuttoffs = { # one st dev below the mean
+        ("qwen0.5b"): 0.00,
+        ("qwen1.5b"): 0.00,
+        ("mistral7b"): 0.00,
+        ("Gemma2b"): 0.00,
+        ("Gemma9b"): 0.00
+    }
+    models = [key for key in llm_stack]
 
 def print_data(tag):
     dfs = {}
@@ -139,6 +167,7 @@ def to_levels(dfs, metric):
 
 def main():
     metric = sys.argv[1]
+    # possible metrics:
     '''
     "is_execution_valid",
     "bleu_col_cuttoff",
@@ -146,6 +175,15 @@ def main():
     "f1_col_cuttoff",
     "f1_hybrid_col_cuttoff"
     '''
+
+    data_src = sys.argv[2] # qald9 or quanda
+    if data_src == "qald9":
+        load_qald_9_data()
+    elif data_src == "quanda":
+        load_quanda_data()
+    else:
+        assert False, f"unknown data src given: {data_src}"
+
     dfs = load_data()
     to_levels(dfs, metric)
 
