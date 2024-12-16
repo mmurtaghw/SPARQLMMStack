@@ -35,10 +35,10 @@ def process_labels(label_idxs, num_labels):
 
 def load_data(path, tokenizer):
     train_file_path = glob.glob(os.path.join(path, "*.train.csv"))
-    assert len(train_file_path) == 1, f"exactly 1 file should be found, found {len(train_file_path)}"
+    assert len(train_file_path) == 1, f"exactly 1 file should be found, found {len(train_file_path)} at path {path}"
     train_file_path = train_file_path[0]
     test_file_path = glob.glob(os.path.join(path, "*.test.csv"))
-    assert len(test_file_path) == 1, f"exactly 1 file should be found, found {len(train_file_path)}"
+    assert len(test_file_path) == 1, f"exactly 1 file should be found, found {len(train_file_path)} at path {path}"
     test_file_path = test_file_path[0]
 
     data_train = pd.read_csv(train_file_path).set_axis(["question", "level"], axis=1)
