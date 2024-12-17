@@ -42,9 +42,10 @@ def load_data(llm_name, data_name):
         llm_stack = load_quanda_data()
     else:
         assert False, f"unknown inference dataset: {data_name}"
-        
+
     data_path = f"data/raw/{data_name}/"
     path = os.path.join(data_path, llm_stack[llm_name])
+
     df = pd.read_csv(path)
     df = df.sort_values(by=['question_id']) # sort so we have consistent order in all cases
     question_col = df["question"]
@@ -55,7 +56,7 @@ def load_data(llm_name, data_name):
             question_col,
             question_id_col,
         ]
-    ).transpose()
+    ).transpose().drop_duplicates()
     df = df.set_axis(
         [
             "question",
@@ -73,7 +74,7 @@ def infer(nl_query, model, tokenizer):
 def write_data(out_file, out_data):
     with open(out_file, "w") as out:
         for row in out_data:
-            print(*row, sep=',', file=out)
+            print(*row, sep='\t', file=out)
 
 def main():
     base_data = sys.argv[1]
@@ -83,12 +84,21 @@ def main():
     out_file = sys.argv[5]
     model, tokenizer, model_path = load_model(base_data, metric)
     questions_df = load_data(llm_name, data_to_infer_on)
+    print(questions_df)
+    exit()
 
-    out_data = []
-    out_data.append(["Question ID", "Question", "ROBERTA_Prediction", "ROBERTA_Model"])
-    for _, row in questions_df.iterrows():
-        question = row["question_id"]
-        question_id = row["question"]
-        roberta_pred = infer(question, model, tokenizer)
-        out_data.append([question, question_id, roberta_pred, model_path])
-    write_data(out_file, out_data)
+    with open(out_file, "w") as out:
+        out_data = []
+        # out_data.append(["Question", "Question_ID", "ROBERTA_Prediction", "ROBERTA_Model"])
+        print('\t'.join(["Question", "Question_ID", "ROBERTA_Prediction", "ROBERTA_Model"]), file=out)
+        for _, row in questions_df.iterrows():
+            question = row["question"]
+            question_id = row["question_id"]
+            roberta_pred = infer(question, model, tokenizer)
+            # out_data.append([question, question_id, roberta_pred, model_path])
+            print('\t'.join(str(x) for x in [question, question_id, roberta_pred, model_path]), file=out)
+
+        # write_data(out_file, out_data)
+
+if __name__ == '__main__':
+    main()
