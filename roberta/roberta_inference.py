@@ -14,16 +14,6 @@ def load_qald_9_data():
     }
     return llm_stack
 
-def load_quanda_data():
-    llm_stack = { # dictionaries preserve order!
-        ("qwen0.5b"): "Qwen0.5B.csv",
-        ("qwen1.5b"): "Qwen1.5B.csv",
-        ("Gemma2b"): "gemma2b.csv",
-        ("mistral7b"): "Mistral7B.csv",
-        ("Gemma9b"): "gemma9b.csv"
-    }
-    return llm_stack
-
 def load_model(data, metric):
     tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
     if data == "qald9":
@@ -35,16 +25,18 @@ def load_model(data, metric):
     model = RobertaForSequenceClassification.from_pretrained(model_path)
     return model, tokenizer, model_path
 
-def load_data(llm_name, data_name):
+def load_data(data_name):
+    # we only need the Qs and Q IDs so choice of file does not matter!
+    # all the same Qs are posed to all the same LLM models
     if data_name == "qald9":
-        llm_stack= load_qald_9_data()
+        questions_file = "processed_qald_9_experiment_report_qwen1.5b_none.csv"
     elif data_name == "vquanda":
-        llm_stack = load_quanda_data()
+        questions_file = "gemma2b.csv"
     else:
         assert False, f"unknown inference dataset: {data_name}"
 
     data_path = f"data/raw/{data_name}/"
-    path = os.path.join(data_path, llm_stack[llm_name])
+    path = os.path.join(data_path, questions_file)
 
     df = pd.read_csv(path)
     df = df.sort_values(by=['question_id']) # sort so we have consistent order in all cases
@@ -80,25 +72,18 @@ def main():
     base_data = sys.argv[1]
     data_to_infer_on = sys.argv[2]
     metric = sys.argv[3]
-    llm_name = sys.argv[4]
-    out_file = sys.argv[5]
+    out_file = sys.argv[4]
     model, tokenizer, model_path = load_model(base_data, metric)
-    questions_df = load_data(llm_name, data_to_infer_on)
-    print(questions_df)
-    exit()
+    questions_df = load_data(data_to_infer_on)
 
     with open(out_file, "w") as out:
         out_data = []
-        # out_data.append(["Question", "Question_ID", "ROBERTA_Prediction", "ROBERTA_Model"])
         print('\t'.join(["Question", "Question_ID", "ROBERTA_Prediction", "ROBERTA_Model"]), file=out)
         for _, row in questions_df.iterrows():
             question = row["question"]
             question_id = row["question_id"]
             roberta_pred = infer(question, model, tokenizer)
-            # out_data.append([question, question_id, roberta_pred, model_path])
             print('\t'.join(str(x) for x in [question, question_id, roberta_pred, model_path]), file=out)
-
-        # write_data(out_file, out_data)
 
 if __name__ == '__main__':
     main()

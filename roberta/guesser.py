@@ -86,12 +86,12 @@ class ROBERTA_Guesser(Guesser):
 
     For ROBERTA, use reference: https://pytorch.org/hub/pytorch_fairseq_roberta/
     '''
-    def __init__(self, min_level, max_level, model_tag, model_save_path):
+    def __init__(self, min_level, max_level, model_save_path):
         '''
-        model_save_path may be smth like f'./output/{model_tag}/results/checkpoint-400/'
+        model_save_path may be smth like f'./output/qald9/f1_col_cuttoff/results/checkpoint-400/'
         '''
         super().__init__(min_level, max_level)
-        self.roberta_model = self._load(model_tag, model_save_path)
+        self.roberta_model = self._load(model_save_path)
 
     def guess(self, nl_query):
         tokenised_query = self.tokenizer(nl_query, return_tensors='pt')
@@ -99,7 +99,7 @@ class ROBERTA_Guesser(Guesser):
         level_guess = int(torch.argmax(guess))
         return level_guess
 
-    def _load(self, model_tag, model_save_path):
+    def _load(self, model_save_path):
         self.tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
         self.model = RobertaForSequenceClassification.from_pretrained(
             model_save_path
@@ -112,23 +112,23 @@ class ROBERTA_PreInfered_Guesser(Guesser):
     '''
     def __init__(self, min_level, max_level, cache_file):
         '''
-        model_save_path may be smth like f'./output/{model_tag}/results/checkpoint-400/'
+        ex ROBERTA_PreInfered_Guesser(0,4,"output/cache/inf_on_qald9-base_data_vquanda-f1_col_cuttoff-qwen0.5b.tsv")
         '''
         super().__init__(min_level, max_level)
         self.cache = self._load(cache_file)
 
     def guess(self, nl_query_or_id):
         if type(nl_query_or_id) is int:
-            pred_df = self.cache.loc[self.cache['question_id'] == nl_query_or_id]
+            pred_df = self.cache.loc[self.cache['Question_ID'] == nl_query_or_id]
         elif type(nl_query_or_id) is str:
-            pred_df = self.cache.loc[self.cache['question'] == nl_query_or_id]
+            pred_df = self.cache.loc[self.cache['Question'] == nl_query_or_id]
         else:
             assert len(pred_df.index) == 1, f"Only should have found one possible match but found {len(pred_df.index)}"
         
-        level_guess = pred_df["ROBERTA_Prediction"].iloc[0]
+        level_guess = int(pred_df["ROBERTA_Prediction"].iloc[0])
         return level_guess
 
     def _load(self, cache_file):
-        cache = pd.read_csv(cache_file)
+        cache = pd.read_csv(cache_file, sep="\t")
         return cache
 
