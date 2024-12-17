@@ -77,7 +77,6 @@ def main():
     questions_df = load_data(data_to_infer_on)
 
     with open(out_file, "w") as out:
-        out_data = []
         print('\t'.join(["Question", "Question_ID", "ROBERTA_Prediction", "ROBERTA_Model"]), file=out)
         for _, row in questions_df.iterrows():
             question = row["question"]
